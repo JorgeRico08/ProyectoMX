@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+
+<title>Home Page</title>
+</head>
+<body>
+<%- include("../partials/navbar") %> 
+<%- include("../partials/flash") %> 
+<%- include("../partials/button") %> 
+<main>
+  <%- include('header'); %>
+    <div class="home-body container mt-4">      
+        <h2 class="text-center"> Bienvenido a libritoMX <i class="fas fa-shopping-cart"></i></h2>
+        <hr>
+        <div style="margin-top: 1rem;" class="container">
+          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+            </ol>
+          </nav>
+        </div>
+
+        <%- include("../partials/carrusel") %> 
+
+        
+</main>
+<%- include("../partials/footer") %>

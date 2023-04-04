@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>button</title>
+
+    <script src="https://kit.fontawesome.com/03a89292db.js" crossorigin="anonymous"></script>
+
+    <style>
+        #subir__arriba{
+    width: 70px;
+    height: 70px;
+    background: rgba(187, 187, 187, 0);
+    color: hsla(0, 0%, 2%, 0.842);
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 30px;
+    position: fixed;
+    bottom: 20px;
+    cursor: pointer;
+    display: flex;
+    margin-left: 72rem;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+    </style>
+</head>
+<body>
+
+    <div id="subir__arriba">
+        <i class="fas fa-angle-up"></i>
+    </div>
+
+    <script>
+        let caja=document.getElementById("subir__arriba");
+caja.addEventListener("click",function(){
+    document.documentElement.scrollTop=0;
+})
+
+window.addEventListener("scroll",function(){
+    if (document.documentElement.scrollTop > 0) {
+        caja.style.display="flex"
+    } else {
+        caja.style.display="none"
+    }
+})
+    </script>
+</body>
+</html>
