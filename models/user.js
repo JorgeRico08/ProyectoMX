@@ -9,6 +9,9 @@ const userSchema =mongoose.Schema({
     googleid:{
         type:String
     },
+    nombreCompleto:{
+        type: String
+    },
     email:{
         type:String
     },

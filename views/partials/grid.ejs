@@ -1,0 +1,44 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJrjgyvKLtH0hFWU7W8mOM-KYLIGv3YLc&callback=iniciarMapa" async defer></script>
+
+<style>
+    .imagenDat{
+      position: absolute;
+      transform: translate(-50%, 15%);
+      fill: rgb(219, 68, 55);
+    stroke: rgb(219, 68, 55);
+    }
+
+    .parrafo{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        size: 40px;
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+    }
+</style>
+
+<div class="container text-center" style="margin-top: 2rem;">
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+    <div class="col-6">
+        <div id="mapa" style="height: 400px;"></div>
+    </div>
+    <div class="col-6">
+        <img class="imagenDat" src="/images/libro.png" alt="ImagenLMX" height="300px" width="600px">
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function iniciarMapa() {
+    var mapa = new google.maps.Map(document.getElementById('mapa'), {
+        center: {lat: 21.16424083675365 , lng: -100.92743154830339}, // Cambia las coordenadas del centro del mapa según tu ubicación deseada
+        zoom: 8 // Ajusta el nivel de zoom del mapa según tus necesidades
+      });
+
+  // Puedes agregar marcadores, polígonos, y otras capas al mapa según tus necesidades
+}
+
+  </script>

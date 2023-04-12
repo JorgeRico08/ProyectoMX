@@ -94,7 +94,8 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <% if(loginUser){ %> 
                 <li>
-                    <div class="dropdown-item"><a href=""><strong><%= loginUser.username%></strong></a></div>
+                    
+                    <div class="dropdown-item"><%= loginUser.username%></div>
 
                 </li>
                 <% if( loginUser.role == "Admin") {%>

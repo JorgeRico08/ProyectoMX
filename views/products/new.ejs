@@ -9,22 +9,74 @@
 </div> 
 <main class="body-container">
     <div class="home container">
-        <h1 class="text-center my-2">Add a product Item</h1>
+        <h1 class="text-center my-2">Agregar productos al inventario.</h1>
         <hr>
         <div class="forms m-auto res-width">
             <form action="/products/new" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                 <div class="form-outline mb-5">
                     <input type="text" id="name" class="form-control" name="name" required/>
-                    <label class="form-label" for="name">Product Name</label>
+                    <label class="form-label" for="name">Nombre del Libro</label>
                     <div class="valid-feedback">Looks good!</div>
                     <div class="invalid-feedback">Not a suitable name</div>
                   </div>
+
                   <div class="form-outline mb-3">
-                    <input type="text" id="price" class="form-control" name="price" required/>
+                    <input type="text" id="autor" class="form-control" name="autor" required/>
+                    <label class="form-label" for="autor">Autor</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+<br>
+                  <div class="form-outline mb-3">
+                    <input type="text" id="editorial" class="form-control" name="editorial" required/>
+                    <label class="form-label" for="editorial">Editorial</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <input type="text" id="edicion" class="form-control" name="edicion" required/>
+                    <label class="form-label" for="edicion">Edicion</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <label class="form-label" for="publicacion">Año de publicacion</label>
+                    <input type="date" id="publicacion" class="form-control" name="publicacion" required/>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <input type="number" id="paginas" class="form-control" name="paginas" required/>
+                    <label class="form-label" for="paginas">Numero de paginas</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <input type="number" id="price" class="form-control" min="0" name="price" required/>
                     <label class="form-label" for="price">Price</label>
                     <div class="valid-feedback">Looks good!</div>
                     <div class="invalid-feedback">Not a valid price!</div>
                   </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <input type="number" id="isbn" class="form-control" min="0" name="isbn" required/>
+                    <label class="form-label" for="isbn">ISBN</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  <br>
+                  <div class="form-outline mb-3">
+                    <input type="text" id="idioma" class="form-control" min="0" name="idioma" required/>
+                    <label class="form-label" for="price">Idioma</label>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Not a valid price!</div>
+                  </div>
+                  
+
                   <h6 class="my-3 text-center">You can give either a image file or a image link</h6>
                   <div class="form-outline mb-4">
                     <input type="file" class="form-control" name="image" id="customFile" />
