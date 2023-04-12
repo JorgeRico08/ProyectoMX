@@ -42,6 +42,17 @@ const userSchema =mongoose.Schema({
     role:{
         type:String,
         default:"Customer"
+    },
+    verificado:{
+        type: Boolean,
+        default: false
+    },
+    codeNuevo:{
+        type: Number
+    },
+    codePass:{
+        type: Number,
+        default: 0
     }
 })
 userSchema.plugin(passportLocalMongoose);

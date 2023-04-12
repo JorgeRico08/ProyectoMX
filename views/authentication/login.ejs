@@ -5,6 +5,8 @@
 <%- include('../partials/navbar') %>
 
  <main>
+  <div class="container-fluid my-2">
+    
      <% if(error!=""){%>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <%= error %> 
@@ -17,6 +19,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     <%}%>
+  </div> 
     <div class="container">
         <h2 class="text-center mt-5">Login Into your Account</h2>
        

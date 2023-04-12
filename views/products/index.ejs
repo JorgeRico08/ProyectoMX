@@ -4,7 +4,9 @@
 </head>
 <body>
 <%- include("../partials/navbar") %> 
-<%- include("../partials/flash") %> 
+<div class="container-fluid my-2">
+  <%- include("../partials/flash") %>
+</div> 
 <%- include("../partials/button") %> 
 <main>
   <%- include('header'); %>
@@ -20,7 +22,5 @@
         </div>
 
         <%- include("../partials/carrusel") %> 
-
-        
 </main>
 <%- include("../partials/footer") %>

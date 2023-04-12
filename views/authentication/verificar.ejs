@@ -1,0 +1,8 @@
+<%- include("../partials/header") %>
+<div class="container-fluid my-2">
+    <%- include("../partials/flash") %>
+  </div>  
+<form action="/verificar" method="POST">
+    <input type="number" name="codeNuevo">
+    <button type="submit" class="btn btn-primary mb-4">Save</button>
+</form>
