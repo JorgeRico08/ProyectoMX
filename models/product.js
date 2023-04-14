@@ -53,6 +53,10 @@ const productSchema=new mongoose.Schema({
         type: String,
         require: true
     },
+    categoria:{
+        type: String,
+        require: true
+    },
     activo: {
         type: Boolean,
         require: true,
@@ -62,4 +66,4 @@ const productSchema=new mongoose.Schema({
 
 })
 const Product=new mongoose.model("products",productSchema)
-module.exports=Product;
+module.exports = Product;

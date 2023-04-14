@@ -7,6 +7,7 @@ const previousUrl = require("../middlewares/previousUrl");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const isLoggedIn=require("../middlewares/isLoggedIn")
 const currentUrl = require("../middlewares/currentUrl");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,6 +32,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+
 router.get("/register", async (req, res) => {
   try {
     res.render("authentication/register");
@@ -41,9 +43,8 @@ router.get("/register", async (req, res) => {
 });
 router.post("/register", upload.single("image"), async (req, res) => {
   try {
-
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-
+    
     const userObj = new User({
       username: req.body.username,
       email: req.body.email,
@@ -62,34 +63,32 @@ router.post("/register", upload.single("image"), async (req, res) => {
       userObj.image = null;
     }
 
+      const mailOptions = {
+        from: 'libritomxdev@gmail.com',
+        to: userObj.email,
+        subject: `Welcome LibritoMX`,
+        text: "Tienda numero 1 en venta de libros",
+        html: `
+        <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
+        <h2>Te damos la bienvenida: ${userObj.username}</h2>
+        <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
+        <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
+        <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
+      };
+      
+       enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email enviado: ' + info.response);
+        }
+      });
 
-    var mailOptions = {
-      from: 'libritomxdev@gmail.com',
-      to: userObj.email,
-      subject: `Welcome LibritoMX`,
-      text: "Tienda numero 1 en venta de libros",
-      html: `
-      <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
-      <h2>Te damos la bienvenida: ${userObj.username}</h2>
-      <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
-      <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
-      <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email enviado: ' + info.response);
-      }
-    });
-
-    await User.register(userObj, req.body.password);
-
-    req.flash("login", "User Registered Successfully, Login to Continue");
-    res.redirect("/login");
+      await User.register(userObj, req.body.password);
+      req.flash("login", "User Registered Successfully, Login to Continue");
+      res.redirect("/login");
   } catch (err) {
-    req.flash("register", err.message);
+    req.flash("register", "El correo o usuario estan duplicado porfavor elija otro");
     res.redirect("/register");
   }
 });
@@ -119,31 +118,43 @@ router.get(
   }
 );
 
-router.get("/verificar", currentUrl, async (req, res) => {
+router.get("/verificar", previousUrl, isLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await Product.findById(id);
-    res.render("authentication/verificar",{data});
+    const data = await User.findById(id);
+    res.render("authentication/verificar", {data});
   } catch (err) { 
     console.log(err);
     res.status(404).render("error/error", { status: "404" });
   }
 });
 
-router.patch("/verificar", async (req, res) => {
+router.patch("/verificar/:id", async (req, res) => { //codeNuevo
   try {
     const { id } = req.params;
-    const codigo = req.body;
-    
-    if (codigo == req.body.codeNuevo) {
-      await Product.findByIdAndUpdate(id, verificado == true);
+    const data = req.body.codeNuevo;
+
+    if (data == req.user.codeNuevo) {
+      await User.findByIdAndUpdate(id, {verificado: true});
       res.redirect("/");
     } else {
       console.log("Error")
+      req.flash("error", "Codigo de verificacion incorrecto");
+      res.redirect("/salir")
     }
-
   } catch (err) {
     console.log(err);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
+
+router.get("/salir", function (req, res) {
+  try {
+    req.flash("login", "User Logged Out");
+    req.logout();
+    res.redirect("/login");
+  } catch (e) {
+    console.log(e);
     res.status(404).render("error/error", { status: "404" });
   }
 });
@@ -158,7 +169,7 @@ router.post(
     try {
       if (req.user.verificado == false) {
         req.flash("error", `Cuenta no verificada es nesesario que se valide la cuenta "${req.user.username}" `);
-        res.redirect('verificar')
+        res.redirect('/verificar')
       } else {
         req.flash("login", `Welcome Back "${req.user.username}" `);
         // req.session.requestedUrl ||
