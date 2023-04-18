@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Product = require("../models/product");
+const Categorias = require("../models/categorias");
 const Reviews = require("../models/reviews");
 const Users = require("../models/user");
 const isLoggedIn = require("../middlewares/isLoggedIn");
@@ -24,8 +25,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 router.get("/", currentUrl, async (req, res) => {
   try {
+    const cat = await Categorias.find({});
     const data = await Product.find({});
-    res.render("products/index", { data });
+    res.render("products/index", { data, cat });
   } catch (err) {
     console.log(err);
     res.status(404).render("error/error", { status: "404" });
@@ -34,6 +36,7 @@ router.get("/", currentUrl, async (req, res) => {
 
 router.get("/bookAll", currentUrl, async (req, res) => {
   try {
+    
     const data = await Product.find({});
     res.render("products/navegacion/all", { data });
   } catch (err) {
@@ -42,9 +45,57 @@ router.get("/bookAll", currentUrl, async (req, res) => {
   }
 });
 
-router.get("/products/new", isLoggedIn, isAdmin, (req, res) => {
+
+router.get("/buscar", currentUrl, async (req, res) => {
+try {
+    const dato = req.query.buscar
+    const data = await Product.find({name: {$regex: '.*'+dato+'.*',$options: "i"}});
+    res.render("products/navegacion/all", { data })
+} catch (err) {
+  console.log(err);
+  res.status(404).render("error/error", { status: "404" });
+}
+});
+
+router.get("/novedades",currentUrl, async(req, res) => {
   try {
-    res.render("products/new");
+    const fechaActual = new Date('2023-04-01T08:30:00Z');
+    const fechFinal = new Date('2023-04-30T08:30:00Z')
+    const data = await Product.find({ created_at: { $gte: fechaActual, $lte: fechFinal} }).sort({ created_at: 1 }); 
+    res.render('products/navegacion/Novedades', { data }); 
+  } catch (err) {
+    console.log(err);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
+
+router.get("/buscarCategoria", currentUrl, async (req, res) => {
+  try {
+      const cat = await Categorias.find({});
+      const dato = req.query.buscar
+      const data = await Product.find({categoria: {$regex: '.*'+ dato +'.*',$options: "i"}});
+      res.render("products/navegacion/Categorias",  { cat , data })
+  } catch (err) {
+    console.log(err);
+    res.status(404).render("error/error", { status: "404" });
+  }
+  });
+
+router.get("/categorias", currentUrl, async (req, res)=>{
+  try {
+    const cat = await Categorias.find({});
+    const data = await Product.find({});
+    res.render('products/navegacion/Categorias', {data , cat } );
+  } catch (err) {
+    console.log(err);
+    res.status(404).render("error/error", { starus: "404" });
+  }
+});
+
+router.get("/products/new", isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    const cat = await Categorias.find({});
+    res.render("products/new", {cat});
   } catch (e) {
     console.log(e);
     res.status(404).render("error/error", { status: "404" });

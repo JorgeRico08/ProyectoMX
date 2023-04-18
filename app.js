@@ -18,6 +18,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 mongoose
   .connect('mongodb+srv://Jorge:Jorge01@cluster0.tbdkk.mongodb.net/ProyectoLibro', {
     useNewUrlParser: true,
@@ -33,6 +34,7 @@ mongoose
     console.log("Data Base Error...");
     console.log(err);
   });
+
 app.use(
   session({
     name: "ecomv1_id",

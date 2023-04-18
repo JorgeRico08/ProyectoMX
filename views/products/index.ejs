@@ -4,7 +4,9 @@
 </head>
 <body>
 <%- include("../partials/navbar") %> 
-<%- include("../partials/flash") %> 
+<div class="container-fluid my-2">
+  <%- include("../partials/flash") %>
+</div> 
 <%- include("../partials/button") %> 
 <main>
   <%- include('header'); %>
@@ -20,7 +22,24 @@
         </div>
 
         <%- include("../partials/carrusel") %> 
+        <%- include("../partials/grid") %> 
 
-        
+        <div class="container text-center" style="margin-top: 2rem;">
+          Visita todas nuestras categorias
+          <div class="row">
+              <form class="d-flex" role="search" action="/buscarCategoria" method="get">
+                <select class="form-select" aria-label="Default select example" name="buscar" required id=" validationCustom04 categoria">
+                  <option selected disabled value="">Selecciona una categoria...</option>
+                  <% for(item of cat){ %> 
+                    <option value="<%=item.categorias%>"><%=item.categorias%></option>
+                  <% } %>
+                </select>
+            <button class="btn btn-success" type="submit" value="Buscar">Search</button>
+          </form>
+           
+          </div>
+        </div>
+
+
 </main>
 <%- include("../partials/footer") %>

@@ -4,7 +4,9 @@
 </head>
 <body>
 <%- include("../partials/navbar") %> 
-<%- include("../partials/flash") %>
+<div class="container-fluid my-2">
+  <%- include("../partials/flash") %>
+</div> 
 <main>
     <div class="container my-3">
         <h2 class="text-center my-2">Admin Actions</h2>
@@ -26,6 +28,12 @@
                 <div class=" actions card text-center col-md my-2 p-5">
                     <div class=" action-item card-body">
                       <h5 class="card-title"><a href="/admin/orders">Orders</a></h5>
+                    </div> 
+                  </div>
+
+                  <div class=" actions card text-center col-md my-2 p-5">
+                    <div class=" action-item card-body">
+                      <h5 class="card-title"><a href="/admin/categorias">Categoria</a></h5>
                     </div> 
                   </div>
             

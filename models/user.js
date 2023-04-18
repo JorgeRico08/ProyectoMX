@@ -9,6 +9,9 @@ const userSchema =mongoose.Schema({
     googleid:{
         type:String
     },
+    nombreCompleto:{
+        type: String
+    },
     email:{
         type:String
     },
@@ -42,6 +45,17 @@ const userSchema =mongoose.Schema({
     role:{
         type:String,
         default:"Customer"
+    },
+    verificado:{
+        type: Boolean,
+        default: false
+    },
+    codeNuevo:{
+        type: Number
+    },
+    codePass:{
+        type: Number,
+        default: 0
     }
 })
 userSchema.plugin(passportLocalMongoose);

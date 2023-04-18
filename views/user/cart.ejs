@@ -4,17 +4,19 @@
 </head>
 <body>
 <%- include("../partials/navbar") %> 
-<%- include("../partials/flash") %>
+<div class="container-fluid my-2">
+    <%- include("../partials/flash") %>
+  </div> 
 <div class="alert-target">
   
 </div>
 <main class="container">
     <div class="cartinto mt-3">
-        <h1 class="my-2">Your Cart </h1>
+        <h1 class="my-2">Tu carrito!</h1>
         <hr>
     </div>
     <%if(data.length<1){%>
-        <h2 class="text-center">Hey <%=loginUser.username%> Your Cart is Empty ! Shop Now!</h2>
+        <h2 class="text-center">Hey <%=loginUser.username%> No tienes libros en tu carrito</h2>
     <%}
     else{%>
     <div class="cartinfo row">
@@ -37,13 +39,13 @@
                     <div class="itemProd col d-flex align-items-center">
                         <div class="prodInfo p-2">
                             <h5 class="name"><%=item.item.name%></h5>
-                            <h6>Price : &#36; <%=item.item.price%></h6>
-                            <h6>Quantity: <%=item.quantity%></h6>
+                            <h6>Precio : &#36; <%=item.item.price%></h6>
+                            <h6>Unidades : <%=item.quantity%></h6>
                         </div>
                     </div>
                     <div class="actionButton d-flex align-items-center justify-content-center col-md-2">
                         <form action="/user/cart/<%=loginUser._id%>/<%=item.item._id%>?_method=DELETE" method="POST">
-                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar de mi carrito</button>
                         </form>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
         <div class="col-md-5">
         <div class="finalBill">
             <div class="card">
-                <div class="card-header text-muted"><h5>PRICE DETAILS</h5></div>
+                <div class="card-header text-muted"><h5>DETALLES DEL PRECIO</h5></div>
                 <div class="card-body">
                     <div class="itemList p-2">
                         <ul  style="list-style: none; padding-left:0;">
@@ -69,19 +71,45 @@
                             let discount=Math.round(20/100*finalPrice);
                             let totalPrice=finalPrice-discount;
                             %>
-                            <li class="py-2 d-flex justify-content-between"><h6>Price<span>(<%=data.length%> <%=itemDisplay%>)</span></h6> <h6>&#36; <%=finalPrice%></h6></li>
-                            <li class="py-2 d-flex justify-content-between"><h6>Discount</h6> <h6 class="text-success">- &#36; <%=discount%></h6></li>
-                            <li class="py-2 d-flex justify-content-between"><h6>Delivery</h6> <h6 class='text-success'>FREE</h6></li>
+                            <li class="py-2 d-flex justify-content-between"><h6>Precio<span>(<%=data.length%> <%=itemDisplay%>)</span></h6> <h6>&#36; <%=finalPrice%></h6></li>
+                            <li class="py-2 d-flex justify-content-between"><h6>Descuento</h6> <h6 class="text-success">- &#36; <%=discount%></h6></li>
+                            <li class="py-2 d-flex justify-content-between"><h6>Envio</h6> <h6 class='text-success'>Gratis</h6></li>
                             <hr>
-                            <li class="d-flex justify-content-between"><h5>Total Price</h5> <h6>&#36; <span id="finalPrice"><%=totalPrice%></span></h6></li>
+                            <li class="d-flex justify-content-between"><h5>Precio final</h5> <h6>&#36; <span id="finalPrice"><%=totalPrice%></span></h6></li>
                         </ul>
                     </div>                
                 </div>
-                <div class="card-footer text-success text-center">You Saved 20% off on this order</div>
+                <div class="card-footer text-success text-center">Has ahorrado un 20 % de descuento en este pedido</div>
             </div>
         </div>
-        <div class="finalBillButton d-grid gap-2 py-3">
-            <button type="button" class="btn btn-success btn-lg" id="rzp-checkout">PLACE ORDER</button>
+        <div class="finalBillButton d-grid gap-2 py-3"> 
+
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Pagar
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pagar mi cuenta</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <!-- <button type="button" class="btn btn-success btn-lg" id="rzp-checkout">Realizar orden</button>
             <div
             class="modal fade"
             id="paymentModal"
@@ -145,7 +173,7 @@
                 </div>
                 </div>
             </div>
-            </div>
+            </div> -->
         </div>
         </div>
     </div>

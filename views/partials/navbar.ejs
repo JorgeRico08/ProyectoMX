@@ -30,10 +30,17 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: aliceblue;" href="/"><h5>Home</h5></a>
+                    <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
                 </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"><h5>Todos los libros</h5></a>
+                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
                     </li>
                 
                     <% if(loginUser != loginUser){ %>
@@ -46,6 +53,7 @@
                                 <% } %>
                             <% } %>
                         <% } %>
+
             </ul>
             <!-- Left links -->
         </div>
@@ -57,7 +65,9 @@
             <!-- <% if(loginUser){ %>
                 <div class="userName me-3 d-none d-sm-block" style="color: white;"><h5 class="">Hello <%= loginUser.username%></h5></div>
             <%}%>  -->
+
             
+
             <% if(loginUser != loginUser){ %>
                 <% if(loginUser.role == "Admin") { %>
                     <li class="nav-item">
@@ -94,7 +104,8 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <% if(loginUser){ %> 
                 <li>
-                    <div class="dropdown-item"><a href=""><strong><%= loginUser.username%></strong></a></div>
+                    
+                    <div class="dropdown-item"><%= loginUser.username%></div>
 
                 </li>
                 <% if( loginUser.role == "Admin") {%>

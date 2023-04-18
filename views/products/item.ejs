@@ -12,12 +12,13 @@
 <%- include("../partials/navbar")%>
 <main>
 <div class="container-fluid my-2">
-  <%- include("../partials/flash") %> 
+  <%- include("../partials/flash") %>
+</div> 
 <div class="container">
   <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">products</li>
+      <li class="breadcrumb-item active" aria-current="page">Libros</li>
       <li class="breadcrumb-item active" aria-current="page"><%=data.name%></li>
     </ol>
   </nav>
@@ -25,24 +26,46 @@
 <div class="product-comment row">
   <section class="product-details col-md-7">
     <div class="card" >
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <% if(data.image && data.image.data!=undefined){%>
-                            <img src="data:image/<%=data.image.contentType%>;base64,<%=data.image.data.toString('base64')%>" width="400" height="400" class="img-fluid"/>
-                          <%}
-                          else {%>
-                          <img
-                              src="<%=data.img%>"
-                              class="img-fluid"
-                            />
-                  <%}%>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" style="text-align: center">
+            <% if(data.image && data.image.data!=undefined){%>
+              <img src="data:image/<%=data.image.contentType%>;base64,<%=data.image.data.toString('base64')%>" width="300" height="300" class="img-fluid"/>
+            <%}
+            else {%>
+            <img
+                src="<%=data.img%>"
+                class="img-fluid"
+              />
+    <%}%>
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card" style="width: 18rem; margin-top: 4rem;">
+            <div class="card-body">
+              <h5 class="card-title">Nombre del Libro: <br> <%=data.name%></h5> <br>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Autor: <%=data.autor%></h6>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Categoria: <%=data.categoria%></h6>
+              <p class="card-text">Precio:  &#36;<%=data.price%> <br>
+                                   Editorial: <%=data.editorial%> <br>
+                                   Edicion: <%= data.edicion %> <br>
+                                   Fecha de publicacion: <%= data.publicacion %><br>
+                                   Numero de paginas: <%= data.paginas %> <br>
+                                   ISBN: <%= data.isbn %><br>
+                                   Idioma: <%= data.idioma %><br>
+                                   Disponibilidad: <% if(data.activo == true){%> Disponible <% }else{%> No disponible <%}%></p>
+            </div>
+          </div>
+        </div>
+        </div>
+                        
+                        <div class="container">
                         <div class="card-body">
-                          <h5 class="card-title"> <%= data.name%> </h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Price &#36; <%=data.price%></h6>
-                          <p class="card-text">
+                          <h6 class="card-subtitle mb-2 text-muted">Sinopsis:</h6>
+                          <p class="card-text" style="text-align: justify;">
                             <%=data.desc%>
                           </p>
                           <div class="action-button d-flex flex-column align-items-center ">
@@ -52,10 +75,10 @@
                                   let addtoCart=`/user/cart/${data._id}`
                                    %>
                                 <form action="<%=addtoCart%>" method="post" class="d-flex justify-content-evenly">
-                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                            <button type="submit" class="btn btn-success">Agregar al carrito</button>
                             <div class="form-outline">
                               <input type="number" id="typeNumber" class="form-control " min=1 max=5 value="1" name="quantity"/>
-                              <label class="form-label" for="typeNumber">Quantity</label>
+                              <label class="form-label" for="typeNumber">Unidades</label>
                             </div>
                             
                             </form> 
@@ -72,40 +95,41 @@
                           
                           <!-- <a href="/products/<%=data._id%>" class="btn btn-success"></a> -->
                         </div>
+                      </div>
                       </div> 
 
 </section> 
 <section class="review-details col-md-5 my-3">
-  <h2>Create a Review</h2>
+  <h2>Opiniones sobre el libro</h2>
   <form action="/products/<%=data._id%>/reviews" class="rating-system" method="POST">
     <div class="rating-num mb-2">
-      <label class="form-label" for="customRange2">Give Your Rating</label>
+      <label class="form-label" for="customRange2">Da tu calificación</label>
       <div class="range">
         <fieldset class="starability-grow">
           
           <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
           <input type="radio" id="first-rate1" name="rating" value="1" />
-          <label for="first-rate1" title="Terrible">1 star</label>
+          <label for="first-rate1" title="Terrible">1 Estrella</label>
           <input type="radio" id="first-rate2" name="rating" value="2" />
-          <label for="first-rate2" title="Not good">2 stars</label>
+          <label for="first-rate2" title="Not good">2 Estrellas</label>
           <input type="radio" id="first-rate3" name="rating" value="3" />
-          <label for="first-rate3" title="Average">3 stars</label>
+          <label for="first-rate3" title="Average">3 Estrellas</label>
           <input type="radio" id="first-rate4" name="rating" value="4" />
-          <label for="first-rate4" title="Very good">4 stars</label>
+          <label for="first-rate4" title="Very good">4 Estrellas</label>
           <input type="radio" id="first-rate5" name="rating" value="5" />
-          <label for="first-rate5" title="Amazing">5 stars</label>
+          <label for="first-rate5" title="Amazing">5 Estrellas</label>
         </fieldset>
       </div>
     </div>
     <div class="review-item form-outline mb-3">
       <textarea class="form-control" id="textAreaExample" name="comment" rows="4"></textarea>
-      <label class="form-label" for="textAreaExample">Write a Product Review</label>
+      <label class="form-label" for="textAreaExample">Escribir la reseña de un producto</label>
     </div>
-    <div class="submit-button"><button type="submit" class="btn btn-primary mb-4">Save</button></div>
+    <div class="submit-button"><button type="submit" class="btn btn-primary mb-4">Guardar</button></div>
   </form>
  
   <div class="all-comments">
-    <h2> Product Reviews</h2>
+    <h2> Opiniones </h2>
     <hr>
     <div class="all-reviews">
       <% if(data.reviews.length>0){
@@ -116,16 +140,16 @@
         avgSum=Math.round(avgSum/data.reviews.length);
         if(avgSum>0){%>
           <div class="avgRating my-3">
-            <h4>Average Customer Rating</h4>
+            <h4>Calificación promedio del cliente</h4>
             <p class="starability-result mt-2" data-rating="<%=avgSum%>"></p>
-            <h5><i>Rating : </i><%=avgSum%> out of 5</h5>
+            <h5><i>Clasificación : </i><%=avgSum%> out of 5</h5>
           </div>
         <%}
         for(index of data.reviews.reverse()){ %> 
         <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">Rating : <p class="starability-result mt-2" data-rating="<%=index.rating%>"></p></h5>
-            <i class="card-subtitle mb-2 text-muted">given by <strong>"<%=index.user%>" </strong>(verfied user)</i>
+            <h5 class="card-title">Clasificación : <p class="starability-result mt-2" data-rating="<%=index.rating%>"></p></h5>
+            <i class="card-subtitle mb-2 text-muted">Dada por <strong>"<%=index.user%>" </strong>(usuario verificado)</i>
             <p class="card-text">
               <%= index.comment %> 
             </p>
@@ -133,15 +157,15 @@
               if(loginUser.username==index.user){%>
             <div class="cardbtn pb-2 d-flex">
               
-              <a type="button" href="/products/<%=data._id%>/reviews/<%=index._id%>" class="btn btn-primary btn-sm me-2">Edit</a>
+              <a type="button" href="/products/<%=data._id%>/reviews/<%=index._id%>" class="btn btn-primary btn-sm me-2">Editar</a>
               <form action="/products/<%=data._id%>/reviews/<%=index._id%>?_method=DELETE" method="post">
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
                 </form>
             </div>
           <%}
             }
             if(index.date){%>
-            <div class="card-footer text-muted"><i>Created On <%=String(index.date).slice(0,10)%></i></div>
+            <div class="card-footer text-muted"><i>Creado en <%=String(index.date).slice(0,10)%></i></div>
             <%}%>
           </div>
         </div>
@@ -149,7 +173,7 @@
       }
         
       else{%>
-        <h3 class="no-data">No reviews yet!</h3>
+        <h3 class="no-data">¡Aún no hay reseñas!</h3>
         
         <% }%>
         

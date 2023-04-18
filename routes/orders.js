@@ -12,25 +12,25 @@ const Orders = require("../models/order");
 const currentUrl=require("../middlewares/currentUrl")
 require('dotenv').config();
 
-// const instance = new Razorpay({
-//   key_id: process.env.RZP_key_id,
-//   key_secret: process.env.RZP_key_secret
-// });
+const instance = new Razorpay({
+  key_id: process.env.RZP_key_id,
+  key_secret: process.env.RZP_key_secret
+});
 router.post("/user/order",isLoggedIn, (req, res) => {
   try{
-  // let reciept = "ODRCPT_ID_" + uuid().slice(-12, -1);
-  // const data = req.body;
-  // data.receipt = reciept;
-  // instance.orders
-  //   .create(data)
-  //   .then((order) => {
-  //     order.rzp_key=process.env.RZP_key_id
-  //     res.send(order);
-  //   })
-  //   .catch((err) => {
-  //     req.flash('error', "There was a problem in the Network , please try again");
-  //     res.send({"failure":"This payment cannot be done "})
-  //   });
+  let reciept = "ODRCPT_ID_" + uuid().slice(-12, -1);
+  const data = req.body;
+  data.receipt = reciept;
+  instance.orders
+    .create(data)
+    .then((order) => {
+      order.rzp_key=process.env.RZP_key_id
+      res.send(order);
+    })
+    .catch((err) => {
+      req.flash('error', "There was a problem in the Network , please try again");
+      res.send({"failure":"This payment cannot be done "})
+    });
   }
   catch(e){
     console.log(e);

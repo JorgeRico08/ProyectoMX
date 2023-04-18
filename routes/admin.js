@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const Product=require('../models/product')
 const Order = require('../models/order')
+const Categoria = require('../models/categorias')
 const passport = require("passport");
 const previousUrl=require("../middlewares/previousUrl")
 const isLoggedIn=require("../middlewares/isLoggedIn")
@@ -28,7 +29,34 @@ router.get("/admin/products",previousUrl,isLoggedIn,isAdmin,async (req,res)=>{
         res.status(404).render('error/error',{"status":"404"})
 
     }
-})
+});
+
+router.get("/admin/categorias", previousUrl, isLoggedIn, isAdmin, async(req, res)=> {
+    try {
+        const data = await Categoria.find({});
+        res.render("admin/adminCategoria",{data});
+    } catch (e) {
+        console.log(e);
+        res.status(404).render('error/error',{"status":"404"})
+    }
+});
+
+router.post("/admin/categoria"),isLoggedIn,isAdmin,async (req, res) => {
+    try {
+        const cat = new Categoria({
+            categorias: req.body.categorias
+          });
+      await Categoria.create(cat);
+     
+      req.flash("status", "Categoria registrada!!");
+      res.redirect("/admin/categorias");
+    }catch (e) {
+      console.log(e);
+      res.status(404).render("error/error", { status: "404" });
+
+    }
+  };
+
 router.get("/admin/user",previousUrl,isLoggedIn,isAdmin,async (req,res)=>{
     try{
     const person=await User.find({}).populate({
