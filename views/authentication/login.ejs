@@ -5,7 +5,13 @@
 <%- include('../partials/navbar') %>
 
  <main>
+
   <div class="container-fluid my-2">
+    <%- include("../partials/flash") %>
+  </div>  
+
+  <div class="container-fluid my-2">
+    
     
      <% if(error!=""){%>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

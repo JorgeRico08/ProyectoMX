@@ -10,6 +10,15 @@ const currentUrl=require("../middlewares/currentUrl")
 
 const Swal = require('sweetalert2');
 
+const validarActivo= async(req,res,next)=>{
+    const {id} = req.params;
+    await Users.find(id, {verificado: false}, (error, result)=> {
+      if (req.user.verificado == false) {
+        req.logout();
+      }
+    })
+  }
+
 router.get("/user/cart",currentUrl,isLoggedIn, async (req, res) =>{
     try{
     const user= await  Users.findById(req.user._id).populate('cart.item')

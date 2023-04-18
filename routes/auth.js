@@ -21,14 +21,23 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
+const validarActivo= async(req,res,next)=>{
+  const {id} = req.params;
+  await User.find(id, {verificado: false}, (error, result)=> {
+    if (req.user.verificado == false) {
+      req.logout();
+    }
+  })
+}
+
 //Correo 
 var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
   auth: {
-  user: 'libritomxdev@gmail.com',
-  pass: 'urby xgoh szga xvhz'
+  user: 'libritomxdev12@gmail.com',
+  pass: 'etyd zwer eutn bkkz'
   }
 });
 
@@ -76,7 +85,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
         <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
       };
       
-       enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+       const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
         } else {
@@ -118,7 +127,7 @@ router.get(
   }
 );
 
-router.get("/verificar", previousUrl, isLoggedIn, async (req, res) => {
+router.get("/verificar",previousUrl, isLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await User.findById(id);
@@ -168,8 +177,9 @@ router.post(
   (req, res) => {
     try {
       if (req.user.verificado == false) {
-        req.flash("error", `Cuenta no verificada es nesesario que se valide la cuenta "${req.user.username}" `);
+        req.flash("error", `Cuenta no verificada es nesesario que se valide la cuenta`);
         res.redirect('/verificar')
+
       } else {
         req.flash("login", `Welcome Back "${req.user.username}" `);
         // req.session.requestedUrl ||
