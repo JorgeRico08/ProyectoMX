@@ -1,3 +1,7 @@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <div class="pagebuilder-overlay"></div> <p style="text-align: center; margin-top: 1rem;">
     <strong>LibritoMX</strong> Enviamos a cualquier lugar de Mexico."
     </p>
@@ -29,22 +33,35 @@
            
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
-                </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
-                    </li>
                 
-                    <% if(loginUser != loginUser){ %>
-                        <% }else{ %>
+                <% if(loginUser != loginUser){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
+                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                        </li>
+                    <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                            </li>
                             <% if(loginUser){ %>
                                 <% if(loginUser.role == "Admin") { %>
                                 <li class="nav-item">
@@ -55,6 +72,7 @@
                         <% } %>
 
             </ul>
+
             <!-- Left links -->
         </div>
         <!-- Collapsible wrapper -->

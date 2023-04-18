@@ -1,0 +1,68 @@
+<%- include("../partials/header") %>
+<div class="container-fluid my-2">
+    <%- include("../partials/flash") %>
+  </div>  
+
+  <style>
+    /* Estilos de la pantalla */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .containerCode {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 15px 15px 15px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 15rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    label, input {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .mensaje {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+
+<div class="containerCode">
+  <h1>Recuperar contraceña</h1>
+  <form action="/rContraceña" method="POST" class="needs-validation" novalidate>
+      <div class="form-outline mb-4">
+        <input type="text" id="email" class="form-control" name="email" required/>
+        <label class="form-label" for="email">Introduce tu electronico</label>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Not a valid name!</div>
+      </div>                  
+      <div class="btn-container d-flex flex-column w-50 justify-center m-auto">
+        <button type="submit" class="btn btn-success mb-8">Enviar</button>
+      </div>
+  </form>
+</div>
+
+<div style="margin-top: 25rem;">
+<%- include('../partials/footer') %> 
+</div>

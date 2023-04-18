@@ -37,7 +37,7 @@ var transporter = nodemailer.createTransport({
   secure: true,
   auth: {
   user: 'libritomxdev12@gmail.com',
-  pass: 'etyd zwer eutn bkkz'
+  pass: 'lbnd imoc giwl lybx'
   }
 });
 
@@ -57,7 +57,6 @@ router.post("/register", upload.single("image"), async (req, res) => {
     const userObj = new User({
       username: req.body.username,
       email: req.body.email,
-      role: req.body.role,
       codeNuevo: code
     });
     let file;
@@ -229,4 +228,39 @@ router.get(
     }
   }
 );
+
+
+router.get("/rPass", async (req, res) => {
+  try {
+    res.render("authentication/rContraceña");
+  } catch (e) {
+    console.log(e);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
+
+router.get("/rContraceñas/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await User.findById(id);
+    res.render("authentication/Shared/idUsuarioRC", {data});
+  } catch (err) { 
+    console.log(err);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
+
+router.post("/rContraceña", async (req, res) => {
+  try {
+    const Email = req.body.email;
+    await User.findById({email: Email})
+
+
+  } catch (err) { 
+    console.log(err);
+    res.flash("error", "Correo invalido");;
+  }
+});
+
+
 module.exports = router;
