@@ -1,6 +1,6 @@
 <%- include("../../partials/header") %>
 
-<title>Home Page</title>
+<title>Librito MX</title>
 </head>
 <body>
 <%- include("../../partials/navbar") %> 
@@ -13,7 +13,7 @@
         <div style="margin-top: 1rem;" class="container">
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
               <li class="breadcrumb-item active" aria-current="page">Categorias</li>
             </ol>
           </nav>
@@ -27,7 +27,7 @@
                     <option value="<%=item.categorias%>"><%=item.categorias%></option>
                   <% } %>
                 </select>
-            <button class="btn btn-success" type="submit" value="Buscar">Search</button>
+            <button class="btn btn-success" type="submit" value="Buscar">Buscar</button>
             <a href="/categorias" class="btn ">Restablecer</a>
           </form>
 
@@ -65,11 +65,11 @@
                         </div>
                         <div class="card-body ">
                           <h5 class="card-title"> <%= item.name%> </h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Price &#36; <%=item.price%></h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Precio &#36; <%=item.price%></h6>
                           <p class="card-text">
                             <%=item.desc.slice(0,90)%>...
                           </p>
-                          <a href="/products/<%=item._id%>" class="btn btn-primary">View More</a>
+                          <a href="/products/<%=item._id%>" class="btn btn-primary">Ver más</a>
                         </div>
                       </div>
                 <%}%>

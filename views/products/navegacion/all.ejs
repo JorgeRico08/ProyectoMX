@@ -1,6 +1,6 @@
 <%- include("../../partials/header") %>
 
-<title>Home Page</title>
+<title>Administrador</title>
 </head>
 <body>
 <%- include("../../partials/navbar") %> 
@@ -13,7 +13,7 @@
         <div style="margin-top: 1rem;" class="container">
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">H</a></li>
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
               <li class="breadcrumb-item active" aria-current="page">Todos los libros</li>
             </ol>
           </nav>
@@ -21,8 +21,8 @@
         <section class="product-holder my-3">
 
           <form class="d-flex" role="search" action="/buscar" method="get">
-            <input class="form-control me-2" type="search" placeholder="Search" name="buscar" aria-label="Search">
-            <button class="btn btn-success" type="submit" value="Buscar">Search</button>
+            <input class="form-control me-2" type="search" placeholder="buscar" name="buscar" aria-label="Search">
+            <button class="btn btn-success" type="submit" value="Buscar">Buscar</button>
             <a href="/bookAll" class="btn ">Restablecer</a>
           </form>
 

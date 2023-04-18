@@ -1,5 +1,5 @@
 <%- include("../partials/header") %> 
-<title>Orders</title>
+<title>Pedidos</title>
 </head>
 <body>
 <%- include("../partials/navbar") %> 
@@ -8,25 +8,23 @@
   </div> 
 <main>
 <div class="container">
-    <h2 class="order-heading my-3 text-center">Admin Orders Page</h2>
+    <h2 class="order-heading my-3 text-center">Administrador de los Pedidos</h2>
     <hr>
-    <div class="backButton-container d-flex justify-content-center my-2">            
-        <a href="/admin/home" class="admin-home btn btn-primary btn-lg" id="adminHomeButton"><i class="fas fa-arrow-left"></i> &nbsp;Back</a>
-    </div>
+
 
     <% if(orders.length<1){ %>
-        <h2 class="text-center">There are no Orders ! </h2>
+        <h2 class="text-center">No hay Pedidos ! </h2>
     <%}
     else{%> 
     <section class="order-list">
         <% for(let item of orders.reverse()){%>
             <div class="card  my-4">
                 <div class="card-header text-center row">
-                    <div class="col-md"><h5>Order Id : <%=item.orderid%></h5></div>
+                    <div class="col-md"><h5>Id del Pedido : <%=item.orderid%></h5></div>
                     <%let usrname= "deleted_user" 
                      if(item.user!=null){usrname=item.user.username}%>
-                   <div class="col-md"><h5>Ordered By "<%=usrname %>" </h5></div>   
-                    <div class="col-md"> <h5>Date Of purchase : <%=String(item.purchaseDate).slice(0,16)%></h5></div>                        
+                   <div class="col-md"><h5>Pedido por "<%=usrname %>" </h5></div>   
+                    <div class="col-md"> <h5>Fecha de Compra : <%=String(item.purchaseDate).slice(0,16)%></h5></div>                        
                     
                  </div>
                 
@@ -36,9 +34,9 @@
                         for(let itemList of item.orderList) { count++  %>
                            
                             <li class="list-group-item">
-                                <h6>Product no : <%=count%></h6>
+                                <h6>Producto no : <%=count%></h6>
                                 <%  if(itemList.item==null){%>
-                                    <h5 class="text-center">This Product no longer exists sorry we cant display its information !</h5>
+                                    <h5 class="text-center">Este producto ya no existe lo sentimos no podemos mostrar su información !</h5>
                                 <%}
                                 else{%>
                                 <div class="itemList row">
@@ -55,10 +53,10 @@
                                         <h5><%=itemList.item.name%></h5>
                                     </div>
                                     <div class="itemList-price col d-flex align-items-center p-3">
-                                        <h5> Price :  &#36; <%=itemList.item.price%></h5>
+                                        <h5> Precio :  &#36; <%=itemList.item.price%></h5>
                                     </div>
                                     <div class="itemList-quantity col d-flex align-items-center p-3">
-                                        <h5> Quantity : <%=itemList.quantity%></h5>
+                                        <h5> Cantidad : <%=itemList.quantity%></h5>
                                     </div>
                                 </div>
                             <%}%>
@@ -68,8 +66,8 @@
                 
                 </div>
                 <div class="card-footer text-center row">
-                    <div class="col-md"><h5>Payment Id : <%=item.paymentid%></h5></div>
-                    <div class="col-md"><h5>Amount Paid :  &#36; <%=item.finalPrice%></h5></div>
+                    <div class="col-md"><h5>Id del Pago : <%=item.paymentid%></h5></div>
+                    <div class="col-md"><h5>Cantidad Pagada :  &#36; <%=item.finalPrice%></h5></div>
                 </div>
             </div>
             

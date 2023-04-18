@@ -1,5 +1,5 @@
 <%- include("../partials/header") %> 
-<title>Orders</title>
+<title>Pedidos</title>
 </head>
 <body>
 <%- include("../partials/navbar") %> 
@@ -8,16 +8,16 @@
   </div> 
 <main>
 <div class="container">
-    <h2 class="order-heading my-3">Your Orders</h2>
+    <h2 class="order-heading my-3">Tus Pedidos</h2>
     <hr>
     <% if(orders.length<1){ %>
-        <h2 class="text-center">You Dont have Any orders Yet ! </h2>
+        <h2 class="text-center">Aun no tienes ningun pedido ! </h2>
     <%}
     else{%> 
     <section class="order-list">
         <% for(let item of orders.reverse()){%>
             <div class="card  my-4">
-                <div class="card-header "> <h5>Date Of purchase : <%=String(item.purchaseDate).slice(0,16)%> Order Id : <%=item.orderid%></h5></div>
+                <div class="card-header "> <h5>Fecha de compra : <%=String(item.purchaseDate).slice(0,16)%> Order Id : <%=item.orderid%></h5></div>
                 
                 <div class="card-body row">
                     <ul class="list-group">
@@ -25,9 +25,9 @@
                         for(let itemList of item.orderList) { count++  %>
                            
                             <li class="list-group-item">
-                                <h6>Product no : <%=count%></h6>
+                                <h6>Producto no : <%=count%></h6>
                                 <%  if(itemList.item==null){%>
-                                    <h5 class="text-center">This Product no longer exists sorry we cant display its information !</h5>
+                                    <h5 class="text-center">Este producto ya no existe lo sentimos no podemos mostrar su información !</h5>
                                 <%}
                                 else{%>
                                 <div class="itemList row">
@@ -44,10 +44,10 @@
                                         <h5><%=itemList.item.name%></h5>
                                     </div>
                                     <div class="itemList-price col d-flex align-items-center p-3">
-                                        <h5> Price :  &#36; <%=itemList.item.price%></h5>
+                                        <h5> Precio :  &#36; <%=itemList.item.price%></h5>
                                     </div>
                                     <div class="itemList-quantity col d-flex align-items-center p-3">
-                                        <h5> Quantity : <%=itemList.quantity%></h5>
+                                        <h5> Cantidad : <%=itemList.quantity%></h5>
                                     </div>
                                 </div>
                             <%}%>
@@ -57,7 +57,7 @@
                 
                 </div>
                 <div class="card-footer text-end">
-                    <h5>Payment Id : <%=item.paymentid%> &nbsp; Amount Paid :  &#36; <%=item.finalPrice%></h5>
+                    <h5>Id del Pago : <%=item.paymentid%> &nbsp; Amount Paid :  &#36; <%=item.finalPrice%></h5>
                 </div>
             </div>
             <hr>

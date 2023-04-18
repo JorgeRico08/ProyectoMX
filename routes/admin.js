@@ -80,11 +80,11 @@ router.delete("/admin/user/:id",previousUrl,isLoggedIn,isAdmin,async (req, res) 
     const {id}=req.params
     try{
     await User.findByIdAndDelete(id);
-    req.flash('success',`The user was deleted successfully !`)
+    req.flash('success',`El usuario se ha eliminado correctamente !`)
     res.redirect('/admin/user');
     }
     catch(err){
-        req.flash('error','Sorry There was a problem in deleting the user').
+        req.flash('error','Lo sentimos Ha habido un problema al borrar el usuario').
         res.redirect('/admin/user')
     }
 }catch(e){

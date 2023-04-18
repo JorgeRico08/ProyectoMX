@@ -28,10 +28,10 @@ mongoose
   })
   .then(() => {
    
-    console.log("Database is connected");
+    console.log("Base de Datos Conectada");
   })
   .catch((err) => {
-    console.log("Data Base Error...");
+    console.log("Error en la Base de Datos...");
     console.log(err);
   });
 
@@ -111,5 +111,5 @@ app.use('*',(req,res)=>{
 })
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server started at port ${process.env.PORT || 3000}`);
+  console.log(`Servidor iniciado en el puerto ${process.env.PORT || 3000}`);
 });
