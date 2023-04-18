@@ -28,8 +28,8 @@ router.post("/user/order",isLoggedIn, (req, res) => {
       res.send(order);
     })
     .catch((err) => {
-      req.flash('error', "There was a problem in the Network , please try again");
-      res.send({"failure":"This payment cannot be done "})
+      req.flash('error', "Se ha producido un problema en la red, inténtelo de nuevo.");
+      res.send({"failure":"Este pago no puede efectuarse "})
     });
   }
   catch(e){
@@ -67,7 +67,7 @@ router.post("/user/order/verify", isLoggedIn,async (req, res) => {
       await orderObj.save();
       userObj.cart.splice(0,userObj.orders.length)
       await userObj.save();
-      req.flash("success","Your Order was placed successfully");
+      req.flash("success","Su pedido se ha realizado correctamente");
       response = { status: "success", orderId: req.body.razorpay_order_id };
     } catch (e) {
       console.log("There is a problem with orders");

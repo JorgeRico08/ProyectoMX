@@ -115,11 +115,11 @@ router.post("/products/new",isLoggedIn,isAdmin,upload.single("image"),async (req
       }
       await Product.create(data);
      
-      req.flash("status", "Item Added Sucessfully!!");
+      req.flash("status", "Artículo añadido correctamente!!");
       res.redirect("/admin/products");
     }
     else{
-      req.flash('error',"You cannot set price more than 100000");
+      req.flash('error',"No se puede fijar un precio superior a 100000");
       res.redirect("/products/new")
     }
     } catch (e) {
@@ -166,11 +166,11 @@ router.patch("/products/:id",isLoggedIn,isAdmin,upload.single("image"),async (re
           await Product.findByIdAndUpdate(id, data);
 
           console.log("Database updated");
-          req.flash("status", "Item details were editted and sucessfully");
+          req.flash("status", "Se han editado los detalles del artículo y se ha conseguido");
           res.redirect("/admin/products");
         }
         else{
-          req.flash('error',"You cannot set price more than 100000");
+          req.flash('error',"No se puede fijar un precio superior a 100000");
           res.redirect(`/products/${id}/edit`)
         }
     } catch (e) {
@@ -187,7 +187,7 @@ router.delete("/products/:id/delete", isLoggedIn, isAdmin, async (req, res) => {
     console.log("Product Deleted...");
     req.flash(
       "status",
-      `The item "${deleting.name}" was deleted successfully..`
+      `El artículo "${deleting.name}"se ha eliminado correctamente..`
     );
     res.redirect("/admin/products");
   } catch (e) {
@@ -212,8 +212,8 @@ router.post("/products/:id/reviews", isLoggedIn, async (req, res) => {
     await productObj.save();
     //reviewObj is a object that is then saved in data base;
     await reviewObj.save();
-    console.log("Comment Saved in Database");
-    req.flash("success","Your review was added successfully !")
+    console.log("Comentario guardado en la base de datos");
+    req.flash("success","Su opinión se ha añadido correctamente !")
     res.redirect(`/products/${id}`);
   } catch (e) {
     res.status(404).render("error/error", { status: "404" });
@@ -227,7 +227,7 @@ const reviewChange = async (req, res, next) => {
   if (userReview.user == req.user.username) next();
   else {
     req.session.previousUrl = req.headers.referer;
-    req.flash("login", "You are not authorized for this operation");
+    req.flash("login", "Usted no está autorizado para esta operación");
     res.redirect(req.session.previousUrl);
   }
 };
@@ -243,7 +243,7 @@ router.get(
         const data = await Reviews.findById(rev_id);
         res.render("reviews/edit", { data, id, rev_id });
       } catch (e) {
-        req.flash("error", "Sorry We encountered a problem");
+        req.flash("error", "Lo sentimos Hemos encontrado un problema");
         res.redirect(`/products/${id}`);
       }
     } catch (e) {
@@ -258,10 +258,10 @@ router.patch("/products/:id/reviews/:rev_id", isLoggedIn, async (req, res) => {
     data.date = Date.now();
     try {
       await Reviews.findByIdAndUpdate(rev_id, data);
-      req.flash("success", "Your Review was Updated successfully");
+      req.flash("success", "Su comentario se ha actualizado correctamente");
       res.redirect(`/products/${id}`);
     } catch (e) {
-      req.flash("error", "There was a problem updating your comment");
+      req.flash("error", "Ha habido un problema al actualizar tu comentario");
       res.redirect(`/products/${id}`);
     }
   } catch (e) {
@@ -273,10 +273,10 @@ router.delete("/products/:id/reviews/:rev_id", isLoggedIn, async (req, res) => {
     const { id, rev_id } = req.params;
     try {
       await Reviews.findByIdAndDelete(rev_id);
-      req.flash("success", "Your Review was Deleted successfully");
+      req.flash("success", "Su comentario se ha eliminado correctamente");
       res.redirect(`/products/${id}`);
     } catch (e) {
-      req.flash("error", "There was a problem updating your comment");
+      req.flash("error", "Ha habido un problema al actualizar tu comentario");
       res.redirect(`/products/${id}`);
     }
   } catch (e) {

@@ -69,7 +69,7 @@ router.post("/user/cart/:prodId",previousUrl,isLoggedIn,async (req,res)=>{
     }
     else{
         if(cartLimit===false){
-            req.flash('error' ,"You cannot add more than 5 items..")
+            req.flash('error' ,"No puede añadir más de 5 artículos..")
             res.redirect(`/products/${prodId}`)
         }
         else{
@@ -91,11 +91,11 @@ router.delete("/user/cart/:userId/:prodId",previousUrl,isLoggedIn,async (req,res
         data.cart.splice(data.cart.findIndex((e)=>e.item==prodId),1);
         
         await data.save();
-        req.flash("success","Item Deleted From Your Cart");
+        req.flash("success","Artículo eliminado de su carrito");
         res.redirect("/user/cart");
      }
      catch(e){
-         req.flash("error","There was a problem deleting from the cart");
+         req.flash("error","Hubo un problema al borrar del carrito");
          res.redirect("/user/cart");
     }
     }

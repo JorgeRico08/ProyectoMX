@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <div class="pagebuilder-overlay"></div> <p style="text-align: center; margin-top: 1rem;">
-    <strong>LibritoMX</strong> Enviamos a cualquier lugar de Mexico."
+    <strong>LibritoMX</strong> Tenemos envíos a cualquier lugar de México."
     </p>
 </div>  
 <!-- Navbar -->
@@ -33,39 +33,26 @@
            
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                
-                <% if(loginUser != loginUser){ %>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
+                </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
+                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
                     </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
-                        </li>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
-                        </li>
-                    <% }else{ %>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: aliceblue;" href="/">Home</a>
-                        </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
-                            </li>
-        
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
-                            </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                    </li>
+                
+                    <% if(loginUser != loginUser){ %>
+                        <% }else{ %>
                             <% if(loginUser){ %>
                                 <% if(loginUser.role == "Admin") { %>
                                 <li class="nav-item">
-                                    <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Admin <i class="fas fa-user-shield"></i></h5> </a>
+                                    <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield"></i></h5> </a>
                                 </li>
                                 <% } %>
                             <% } %>
@@ -89,7 +76,7 @@
             <% if(loginUser != loginUser){ %>
                 <% if(loginUser.role == "Admin") { %>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Admin <i class="fas fa-user-shield" style="color: aliceblue;"></i></h5> </a>
+                        <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield" style="color: aliceblue;"></i></h5> </a>
                     </li>
                     <% } %>
                 <% }else{ %>
@@ -129,19 +116,19 @@
                 <% if( loginUser.role == "Admin") {%>
                 <% } else { %>
                     <li>
-                        <a class="dropdown-item" href="/user/orders">Your Orders</a>
+                        <a class="dropdown-item" href="/user/orders">Tus Ordenes</a>
                     </li>
                 <% } %>
                 <li>
-                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <a class="dropdown-item" href="/logout">Cerrar Sesion</a>
                 </li>
             <%}
             else {%>
                 <li>
-                    <a class="dropdown-item" href="/register">Register</a>
+                    <a class="dropdown-item" href="/register">Registrarese</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="/login">Login</a>
+                    <a class="dropdown-item" href="/login">Iniciar Session</a>
                 </li>
             <% } %>
             </ul>

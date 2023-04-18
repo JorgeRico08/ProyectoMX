@@ -93,7 +93,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
       });
 
       await User.register(userObj, req.body.password);
-      req.flash("login", "User Registered Successfully, Login to Continue");
+      req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
       res.redirect("/login");
   } catch (err) {
     req.flash("register", "El correo o usuario estan duplicado porfavor elija otro");
@@ -106,7 +106,7 @@ router.get(
   (req, res, next) => {
     try {
       if (req.isAuthenticated()) {
-        req.flash("error", "Your are already Logged In");
+        req.flash("error", "Ya está conectado");
         let redirect = "/";
 
         
@@ -158,7 +158,7 @@ router.patch("/verificar/:id", async (req, res) => { //codeNuevo
 
 router.get("/salir", function (req, res) {
   try {
-    req.flash("login", "User Logged Out");
+    req.flash("login", "Usuario desconectado");
     req.logout();
     res.redirect("/login");
   } catch (e) {
@@ -180,7 +180,7 @@ router.post(
         res.redirect('/verificar')
 
       } else {
-        req.flash("login", `Welcome Back "${req.user.username}" `);
+        req.flash("login", `Bienvenido de nuevo "${req.user.username}" `);
         // req.session.requestedUrl ||
         let redirect = req.session.previousUrl || "/"; 
         res.redirect(redirect);
@@ -193,7 +193,7 @@ router.post(
 );
 router.get("/logout", function (req, res) {
   try {
-    req.flash("login", "User Logged Out");
+    req.flash("login", "Usuario desconectado");
     req.logout();
     let redirect = req.session.previousUrl || "/";
     res.redirect(redirect);
@@ -219,7 +219,7 @@ router.get(
     try {
       // Successful authentication, redirect home.
       // let redirect=req.session.requestedUrl || req.session.previousUrl|| '/';
-      console.log("Entered into google authentication");
+      console.log("Introducido en la autenticación de google");
       let redirect = req.session.previousUrl || "/";
       res.redirect(redirect);
     } catch (e) {
