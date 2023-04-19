@@ -27,6 +27,10 @@ const userSchema =mongoose.Schema({
         required:true,
         unique:true,
     },
+    telefono: {
+        type: String,
+        require: true
+    },
     cart:[
         {
         item:{

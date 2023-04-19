@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const Recaptcha = require('google-recaptcha');
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
@@ -19,6 +20,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+const recaptcha = new Recaptcha({ secret: '6LcLr5slAAAAAMi5S06BGPrd9Rv7W' });
 
 
 const validarActivo= async(req,res,next)=>{
@@ -42,6 +45,7 @@ var transporter = nodemailer.createTransport({
 });
 
 
+
 router.get("/register", async (req, res) => {
   try {
     res.render("authentication/register");
@@ -53,12 +57,15 @@ router.get("/register", async (req, res) => {
 router.post("/register", upload.single("image"), async (req, res) => {
   try {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    
+    let oData = req.body
+
     const userObj = new User({
       username: req.body.username,
       email: req.body.email,
+      telefono: req.body.telefono,
       codeNuevo: code
     });
+
     let file;
     try {
       file = path.join(__dirname,"/uploads/users/" + req.file.filename);
@@ -71,30 +78,65 @@ router.post("/register", upload.single("image"), async (req, res) => {
       userObj.image = null;
     }
 
-      const mailOptions = {
-        from: 'libritomxdev@gmail.com',
-        to: userObj.email,
-        subject: `Welcome LibritoMX`,
-        text: "Tienda numero 1 en venta de libros",
-        html: `
-        <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
-        <h2>Te damos la bienvenida: ${userObj.username}</h2>
-        <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
-        <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
-        <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
-      };
-      
-       const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email enviado: ' + info.response);
-        }
-      });
+            // ********   VALIDACION reCAPCHA
+            const recaptchaToken = oData['g-recaptcha-response'];
+            let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
+    
+            const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+            const response = await fetch(url, {
+              method: 'POST'
+            });
+            const data = await response.json();
+    
+            // ************
+    
 
-      await User.register(userObj, req.body.password);
-      req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
-      res.redirect("/login");
+    const mailOptions = {
+      from: 'libritomxdev@gmail.com',
+      to: userObj.email,
+      subject: `Welcome LibritoMX`,
+      text: "Tienda numero 1 en venta de libros",
+      html: `
+      <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
+      <h2>Te damos la bienvenida: ${userObj.username}</h2>
+      <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
+      <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
+      <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
+    };
+
+    var myregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/; 
+    // if (!myregex.test(req.body.password && req.body.pwd2)) {
+      if (req.body.password == req.body.pwd2) {
+        if (!data.success) {
+          req.flash("register", "reCAPTCHA invalido, Acaso no eres un humano!");
+          res.redirect("/register");
+        }else{
+          const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email enviado: ' + info.response);
+            }
+          });
+  
+          User.register(userObj, req.body.password);
+          enviarEmail;
+          req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
+          req.flash("login", "Se enviado un email con su codigo de acceso para acceder!");
+          res.redirect("/login");
+        }
+  
+      // } else {
+      //   req.flash("register", "Las contraceñas no coinciden");
+      //    res.redirect("/register");
+      // }
+    } else {
+      req.flash("register", "La contraceña debe cumplicir con las espesificaciones mensionadas");
+      res.redirect("/register");
+    }
+
+    
+
   } catch (err) {
     req.flash("register", "El correo o usuario estan duplicado porfavor elija otro");
     res.redirect("/register");

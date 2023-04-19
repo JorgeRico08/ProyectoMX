@@ -4,7 +4,9 @@
 <body>
 <%- include('../partials/navbar') %>
 
- <main>
+<script src="https://www.google.com/recaptcha/enterprise.js?render=6Lfd1pslAAAAAFN363D0VzuRYmlxa63o3VbUh1ZJ"></script>
+
+<main>
   <div class="container-fluid my-2">
      <% if(register!=""){%>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -13,17 +15,23 @@
       </div>
     <%}%>
   </div>
+  <div class="container-fluid my-2">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Con fines de brindarle un buen servicio, esperemos que los datos que resivimos sean correctos!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
     <div class="container">
         <h2 class="text-center mt-5">Registra una cuenta</h2>
        
         <div class="form-section d-flex justify-content-center align-items-center my-5" >
-            <form action="/register" method="post" class="register-form needs-validation res-width" enctype="multipart/form-data" novalidate>
+            <form action="/register" method="post" class="register-form needs-validation res-width" onsubmit="return checkForm(this);" enctype="multipart/form-data" novalidate>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class=" mb-4">
                   <div class="image-port">
                     <img src="https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png" height="90px" width="90px" class="profile-photo m-auto" id="dp-pick">
                   </div>
-                    <input type="file" class="form-control" name="image" id="files"/>
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg" name="image" id="files"/>
                   
                 </div>
              
@@ -32,21 +40,32 @@
                       <label class="form-label" for="username">Nombre de usuario</label>
                     </div>
                   
-                  
-                
-              
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                   <input type="email" id="email" class="form-control" name="email" required />
                   <label class="form-label" for="email">Email</label>
                 </div>
+                <div class="form-outline mb-4">
+                    <input type="tel" class="form-control" id="telefono" name="telefono" value="+52" required>
+                    <label class="form-label" for="email">Numero de telefono</label>
+                  </div>
               
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                   <input type="password" id="password" class="form-control" name="password" required/>
                   <label class="form-label" for="password">Contraseña</label>
                 </div>
-              
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input type="password" id="password2" class="form-control" name="pwd2" required/>
+                  <label class="form-label" for="password">Vuelve a escribir la contraceña</label>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showPassword()">Mostrar contraceñas</button>
+                <div style="margin-top: 2rem;" class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                  <span>Usa 8 o más caracteres con una combinación de letras, números y símbolos</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
                 <!-- Checkbox
                 <div class="form-outline mb-4">
                   <label for="role" class="ms-2"><h6>User Role :</h6></label>
@@ -57,9 +76,11 @@
                
                 </div> -->
                 
-              
+                <div class="g-recaptcha" data-sitekey="6LefrZwlAAAAAJKs-PXulIxft8jolMoD6E-9Bjnq" name="recaptchaToken" ></div>
+
+
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Registrarse</button>
+                <button style="margin-top: 2rem;" type="submit" class="btn btn-primary btn-block mb-4">Registrarse</button>
               
                 <!-- Register buttons -->
                 <div class="text-center">
@@ -73,8 +94,22 @@
               </form>
          </div>
     </div>
-     
+
  </main>
+ <script>
+  function showPassword() {
+    var x = document.getElementById("password");
+    var y = document.getElementById("password2");
+    if (x.type && y.type === "password") {
+      x.type = "text";
+      y.type = "text";
+    } else {
+      x.type = "password";
+      y.type = "password";
+    }
+  }
+  </script>
+  
  <script>
    
    document.getElementById('files').onchange = function () {
@@ -82,5 +117,38 @@
   var src = URL.createObjectURL(this.files[0])
   document.getElementById('dp-pick').src = src
 }
- </script>
+
+//   function checkPassword(valor){
+//     var myregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; 
+//    if(myregex.test(valor)){
+//        swal("Oops!", valor + "es valido :-) !", "error")
+//        return true;        
+//    }else{
+//       alert();
+//      swal("Oops!", valor + "NO es valido!", "error")
+//        return false;        
+//    }   
+//  }
+
+//   function checkForm(form){
+//     if(form.email.value == "") {
+//         swal("Oops!", "Debe escribir el correo!", "error")
+//       form.email.focus();
+//       return false;
+//     }
+//     if(form.password.value != "" && form.password.value == form.pwd2.value) {
+//       if(!checkPassword(form.pwd1.value)) {  
+//         swal("Oops!", "La contraseña no es valida!", "error")
+//         form.password.focus();
+//         return false;
+//       }
+//     } else {
+//       swal("Oops!", "las contraseñas no coinciden!", "error")
+//       form.password.focus();
+//       return false;
+//     }
+//     return true;
+//   }
+</script>
+
 <%- include('../partials/footer') %> 
