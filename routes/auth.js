@@ -143,6 +143,17 @@ router.post("/register", upload.single("image"), async (req, res) => {
   }
 });
 
+router.get('/autocomplete', function(req, res) {
+  var rutas = [
+    { label: 'Todos los libros', value: '/bookAll' },
+    { label: 'Inicio', value: '/' },
+    { label: 'Novedades', value: '/novedades' },
+    { label: 'Categorias', value: '/categorias' }
+  ];
+  res.send(rutas);
+});
+
+
 router.get(
   "/login",
   (req, res, next) => {

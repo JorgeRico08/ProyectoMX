@@ -71,7 +71,18 @@
                 <div class="userName me-3 d-none d-sm-block" style="color: white;"><h5 class="">Hello <%= loginUser.username%></h5></div>
             <%}%>  -->
 
-            
+            <form class="d-flex input-group w-auto"> 
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  id="ruta" 
+                  name="ruta"
+                />
+                
+              </form>
 
             <% if(loginUser != loginUser){ %>
                 <% if(loginUser.role == "Admin") { %>
@@ -138,3 +149,32 @@
     <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
+
+<!-- Utilizando un CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+$(function() {
+  $('#ruta').autocomplete({
+    source: function(request, response) {
+      $.ajax({
+        url: '/autocomplete',
+        dataType: 'json',
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    minLength: 1, // Se especifica que se muestren las sugerencias a partir del primer carácter ingresado
+    select: function(event, ui) {
+      window.location.href = ui.item.value; // Se redirige al usuario a la ruta seleccionada
+      return false; // Se previene el comportamiento predeterminado del evento 'select'
+    }
+  });
+});
+
+
+</script>
+
