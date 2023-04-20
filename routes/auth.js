@@ -46,14 +46,7 @@ var transporter = nodemailer.createTransport({
 
 
 
-router.get("/register", async (req, res) => {
-  try {
-    res.render("authentication/register");
-  } catch (e) {
-    console.log(e);
-    res.status(404).render("error/error", { status: "404" });
-  }
-});
+
 router.post("/register", upload.single("image"), async (req, res) => {
   try {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -153,7 +146,28 @@ router.get('/autocomplete', function(req, res) {
   ];
   res.send(rutas);
 });
+router.get("/register", 
+(req, res, next) => {
+  try {
+    if (req.isAuthenticated()) {
+      req.flash("error", "Ya está conectado");
+      let redirect = "/";
 
+      
+      res.redirect(redirect);
+    } else next();
+  } catch (e) {
+    console.log(e);
+    res.status(404).render("error/error", { status: "404" });
+  }
+}, async (req, res) => {
+  try {
+    res.render("authentication/register");
+  } catch (e) {
+    console.log(e);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
 
 router.get(
   "/login",
@@ -284,7 +298,21 @@ router.get(
 );
 
 
-router.get("/rPass", async (req, res) => {
+router.get("/rPass", 
+(req, res, next) => {
+  try {
+    if (req.isAuthenticated()) {
+      req.flash("error", "Ya está conectado");
+      let redirect = "/";
+
+      
+      res.redirect(redirect);
+    } else next();
+  } catch (e) {
+    console.log(e);
+    res.status(404).render("error/error", { status: "404" });
+  }
+}, async (req, res) => {
   try {
     res.render("authentication/rContraceña");
   } catch (e) {

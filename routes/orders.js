@@ -83,6 +83,10 @@ router.post("/user/order/verify", isLoggedIn,async (req, res) => {
   }
 });
 
+router.post('/user/orden', (req, res) => {
+    ty
+});
+
 router.get("/user/payment/:payment_id/:error_code",isLoggedIn,(req,res)=>{
   try{
   const error=req.session.paymentError

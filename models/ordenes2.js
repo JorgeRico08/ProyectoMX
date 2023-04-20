@@ -21,11 +21,11 @@ const ordenesSchema = mongoose.Schema({
   tarjeta: {
     type: String,
   },
-  nombreFac: {
-    type:String
-  },
   cve:{
     type:Number
+  },
+  nombreFac: {
+    type:String
   },
   colonia: {
     type: String,
@@ -39,10 +39,10 @@ const ordenesSchema = mongoose.Schema({
   ciudad:{
     type: String
   },
-  ref1:{
+  estado: {
     type: String
   },
-  ref2:{
+  ref1:{
     type: String
   },
   telefono:{
