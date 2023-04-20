@@ -63,6 +63,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       telefono: req.body.telefono,
+      codePass: 0,
       codeNuevo: code
     });
 
@@ -292,26 +293,153 @@ router.get("/rPass", async (req, res) => {
   }
 });
 
-router.get("/rContraceñas/:id", async (req, res) => {
+router.post("/rPass", async (req, res) => {
   try {
-    const { id } = req.params;
-    const data = await User.findById(id);
-    res.render("authentication/Shared/idUsuarioRC", {data});
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+// ********   VALIDACION reCAPCHA
+let oData = req.body
+const recaptchaToken = oData['g-recaptcha-response'];
+let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
+
+const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+const response = await fetch(url, {
+  method: 'POST'
+});
+const data = await response.json();
+
+// ************
+    const correo  = req.body.email;
+    if (!data.success) {
+      req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
+      res.redirect("/rPass");
+    }else{
+    await User.find({email: correo}, async function (error, result) {
+      if (result == undefined || result == null || result[0] == null) {
+        req.flash("error", "El correo no esta registrado a LibritoMX")
+        res.redirect('/login');
+      }else{
+      if (correo == result[0].email) {
+        const mailOptions = {
+            from: 'libritomxdev@gmail.com',
+            to: result[0].email,
+            subject: `Recuperar tu contraceña`,
+            html: `
+            <h1>Recuperar contraceña</h1>
+            <p>Tu codigo de para recuperar contraceña es: ${code}</p>
+            <p>Este codigo es importante para poder recuperar tu contraceña</p>
+            <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
+          };
+  
+          const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email enviado: ' + info.response);
+            }
+      })
+        const id = result[0]._id
+        const p = await User.findByIdAndUpdate({_id: id}, {$set: {codePass: code}})
+        console.log(p, enviarEmail);
+        req.flash("success", "ya cuentas con tu codigo, dirijete a 'Tengo mi codigo de verificacion'")
+        res.redirect("/rPass")
+      }else{
+        console.log(error)
+        req.flash("error", "Error")
+        res.redirect("/rPass")
+      }
+      if (error) {
+        console.log(error)
+        req.flash("error", "Error")
+        res.redirect("/rPass")
+      }
+    }
+    })
+  }
   } catch (err) { 
     console.log(err);
-    res.status(404).render("error/error", { status: "404" });
+    res.flash("error", "Correo invalido");
+    res.redirect("/rPass")
   }
 });
 
-router.post("/rContraceña", async (req, res) => {
+router.post("/rPassUpdate", async (req, res)=>{
   try {
-    const Email = req.body.email;
-    await User.findById({email: Email})
 
+// ********   VALIDACION reCAPCHA
+let oData = req.body
+const recaptchaToken = oData['g-recaptcha-response'];
+let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
 
-  } catch (err) { 
-    console.log(err);
-    res.flash("error", "Correo invalido");;
+const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+const response = await fetch(url, {
+  method: 'POST'
+});
+const data = await response.json();
+
+// ************
+
+    const codigo = req.body.codePass;
+    const correo = req.body.email;
+    const pass = req.body.password;
+    if (!data.success) {
+      req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
+      res.redirect("/rPass");
+    }else{
+    await User.find({email: correo}, async function (error, result) {
+      if (result == undefined || result == null || result[0] == null) {
+        req.flash("error","El correo no esta registrado a LibritoMX");
+        res.redirect("/rPass")
+      } else {
+        console.log("Exito");
+        if (correo == result[0].email) {
+          console.log("El email existe");
+          if (codigo == result[0].codePass) {
+            console.log("El codigo es correcto");
+              if (pass == req.body.pwd2) {
+                const mailOptions = {
+                  from: 'libritomxdev@gmail.com',
+                  to: result[0].email,
+                  subject: `Contraceña restablecida`,
+                  html: `
+                  <h1>Contraceña restableciada</h1>
+                  <p>Has actualizado la contraceña</p>
+                  <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
+                };
+
+                const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email enviado: ' + info.response);
+                  }
+                });
+
+                console.log("pass correcta");
+                await result[0].setPassword(req.body.password);
+                await result[0].save();
+                enviarEmail;
+                console.log(result)
+                req.flash("success", "Todo es correcto");
+                res.redirect("/login")
+              }else{
+                req.flash("error","Las contraceñas no coinciden");
+                res.redirect("/rPass")
+              };
+            }else{
+              req.flash("error","Codigo de verificacion incorrecto");
+              res.redirect("/rPass")
+            }
+        } else {
+          req.flash("error","Este correo no existe")
+          res.redirect("/rPass")
+        }
+      };
+    });
+  
+  }
+  } catch (error) {
+      res.flash("error", "Error de sistema");
+      res.redirect("/rPass")
   }
 });
 

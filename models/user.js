@@ -58,8 +58,7 @@ const userSchema =mongoose.Schema({
         type: Number
     },
     codePass:{
-        type: Number,
-        default: 0
+        type: Number
     }
     // password:{
     //     type: String,
