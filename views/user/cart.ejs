@@ -46,7 +46,7 @@
                     </div>
                     <div class="actionButton d-flex align-items-center justify-content-center col-md-2">
                         <form action="/user/cart/<%=loginUser._id%>/<%=item.item._id%>?_method=DELETE" method="POST">
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar de mi carrito</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                     </div>
                 </div>
@@ -90,21 +90,117 @@
                         <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Pagar
                         </button>
+                        <a type="button" class="btn btn-warning btn-lg" href="/bookAll">
+                            Seguir comprando
+                        </a>
                         
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Pagar mi cuenta</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        ...
+                                        
+                                        <form action="/pedido" method="post" class="needs-validation" novalidate>
+                                            <div class="form-outline mb-4">
+                                              <input type="number" id="tarjeta" class="form-control" name="tarjeta" required/>
+                                              <label class="form-label" for="tarjeta">Num. Tarjeta</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div> 
+                                            <div class="form-outline mb-4">
+                                              <input type="number" id="cve" class="form-control" name="cve" minlength="2" maxlength="3" required/>
+                                              <label class="form-label" for="cve">CVE</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div> 
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="nombreFac" class="form-control" name="nombreFac" required/>
+                                              <label class="form-label" for="nombreFac">Nombre del titular</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+
+                                            <p>DETALLES DE ENVIO</p>
+
+                                            <div class="form-outline mb-4">
+                                                <!-- <select class="form-select" aria-label="Default select example" name="estado" required id=" validationCustom04 estado">
+                                                    <option selected disabled value="">Selecciona una estado...</option>
+                                                      <option value="Guanajuato">Guanajuato</option>
+                                                      <option value="Monterrey">Monterrey</option>
+                                                      <option value="Guadalajara">Guadalajara</option>
+                                                      <option value="CDMX">CDMX</option>
+                                                      <option value="Queretaro">Queretaro</option>
+                                                      <option value="Puebla">Puebla</option>
+                                                      <option value="San Luis Potosi">San Luis Potosi</option>
+                                                      <option value="Baja California Norte">Baja California Norte</option>
+                                                      <option value="Baja California Sur">Baja California Sur</option>
+                                                      <option value="Michoacan">Michoacan</option>
+                                                      <option value="Cancun">Cancun</option>
+                                                      <option value="Guerrero">Guerrero</option>
+                                                  </select> -->
+                                                <input type="text" id="estado" class="form-control" name="estado" required/>
+                                                <label class="form-label" for="estado">Estado</label>
+                                                <div class="valid-feedback">¡Los datos son correctos!</div>
+                                                <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="ciudad" class="form-control" name="ciudad" required/>
+                                              <label class="form-label" for="ciudad">Ciudad</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                              <input type="number" id="cp" class="form-control" name="cp" required/>
+                                              <label class="form-label" for="cp">Codigo Postal</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="colonia" class="form-control" name="colonia" required/>
+                                              <label class="form-label" for="colonia">Colonia</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="calle" class="form-control" name="calle" required/>
+                                              <label class="form-label" for="calle">Calle</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <p>REFERENCIAS DEL DOMICILIO</p>
+                                            <div class="form-outline mb-4">
+                                              <input type="text" id="ref1" class="form-control" name="ref1" required/>
+                                              <label class="form-label" for="ref1">Referencia 1</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                              <input type="tel" id="telefono" value="+52" class="form-control" name="telefono" minlength="9" maxlength="13" required/>
+                                              <label class="form-label" for="telefono">Telefono</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                              <input type="number" id="finalPrice" value="<%=totalPrice%>" class="form-control" name="finalPrice" required/>
+                                              <label class="form-label" for="finalPrice">Precio Final</label>
+                                              <div class="valid-feedback">¡Los datos son correctos!</div>
+                                              <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                                            </div>
+                                            
+                                            <div class="btn-container d-flex flex-column w-50 justify-center m-auto">
+                                              <button style="margin-top: 2rem;" type="submit" class="btn btn-success mb-8">Pagar</button>
+                                              <button style="margin-top: 1rem;" type="reset" class="btn btn-primary mb-4">Limpiar datos</button>
+                                            </div>
+                                        </form>
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary">Guardar cambios</button>
                                     </div>
                                 </div>
                             </div>
