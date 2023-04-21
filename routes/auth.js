@@ -97,11 +97,6 @@ router.post("/register", upload.single("image"), async (req, res) => {
       <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
       <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
     };
-// console.log(userObj.email)
-// console.log(Valida)
-//     if (userObj.email == Valida) {
-//       console.log("duplicado")
-//     }
         if (req.body.password == req.body.pwd2) {
             if (!data.success) {
               req.flash("register", "reCAPTCHA invalido, Acaso no eres un humano!");
