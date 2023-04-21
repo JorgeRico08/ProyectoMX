@@ -92,7 +92,7 @@ router.post("/user/order",isLoggedIn, (req, res) => {
 //   }
 // });
 
-router.post('/user/orden', isLoggedIn, async (req, res) => {
+router.post('/pedido', isLoggedIn, async (req, res) => {
     try {
       const code = Math.floor(100000 + Math.random() * 900000000).toString();
       const userObj = await Users.findById(req.user._id);
@@ -116,7 +116,7 @@ router.post('/user/orden', isLoggedIn, async (req, res) => {
       await orderObj.save();
       console.log(orderObj)
       userObj.orders.push(orderObj);
-      userObj.cart.splice(0,userObj.orders.length)
+      userObj.cart.splice(0)
       await userObj.save();
       req.flash("success","Su pedido se ha realizado correctamente");
       res.redirect("/user/cart")
