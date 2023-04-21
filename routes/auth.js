@@ -121,6 +121,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
           res.redirect("/register");
         }
   } catch (err) {
+    console.log(err)
     req.flash("register", "El correo o usuario estan duplicado porfavor elija otro");
     res.redirect("/register");
   }
