@@ -97,29 +97,37 @@ router.post("/register", upload.single("image"), async (req, res) => {
       <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
       <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
     };
-        if (req.body.password == req.body.pwd2) {
-            //  if (!data.success) {
-            //   req.flash("register", "reCAPTCHA invalido, Acaso no eres un humano!");
-            //   res.redirect("/register");
-            // }else{
-              const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email enviado: ' + info.response);
-                }
-              });
-      
-              User.register(userObj, req.body.password);
-              enviarEmail;
-              req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
-              req.flash("login", "Se enviado un email con su codigo de acceso para acceder!");
-              res.redirect("/login");
-            // }
+
+    await User.find({email: userObj.email}, async function (error, result) {
+      if (result == undefined || result == null || result[0] == null) {
+        if (req.body.password == req.body.pwd2) {  
+          const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email enviado: ' + info.response);
+          }   
+          });
+  
+          User.register(userObj, req.body.password);
+          enviarEmail;
+          req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
+          req.flash("login", "Se enviado un email con su codigo de acceso para acceder!");
+          res.redirect("/login");
+
+          }else{
+            req.flash("error","Las contraceñas no coinciden");
+            res.redirect("/register")
+          };
+      }else{
+        if (userObj.email == result[0].email) {
+          req.flash("register","Este correo ya esxiste")
+          res.redirect("/register")    
         } else {
-          req.flash("register", "La contraceña no coinciden");
-          res.redirect("/register");
+
         }
+      }
+        });
   } catch (err) {
     console.log(err)
     req.flash("register", "El correo o usuario estan duplicado porfavor elija otro");
