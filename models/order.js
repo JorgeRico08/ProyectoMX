@@ -6,12 +6,10 @@ const orderSchema = mongoose.Schema({
   },
   orderid: {
     type: String,
-    required: true,
   },
   orderList: [
     {
       type: Object,
-      required: true,
     },
   ],
   fechaCompra: {
