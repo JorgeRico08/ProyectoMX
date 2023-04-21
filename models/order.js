@@ -7,12 +7,6 @@ const orderSchema = mongoose.Schema({
   orderid: {
     type: String,
     required: true,
-    unique: true,
-  },
-  paymentid: {
-    type: String,
-    required: true,
-    unique: true,
   },
   orderList: [
     {
@@ -20,14 +14,45 @@ const orderSchema = mongoose.Schema({
       required: true,
     },
   ],
-  purchaseDate: {
+  fechaCompra: {
     type: Date,
     default: Date.now(),
   },
+  tarjeta: {
+    type: String,
+  },
+  cve:{
+    type:Number
+  },
+  nombreFac: {
+    type:String
+  },
+  colonia: {
+    type: String,
+  },
+  calle: {
+    type: String
+  },
+  cp:{
+    type: Number
+  },
+  ciudad:{
+    type: String
+  },
+  estado: {
+    type: String
+  },
+  ref1:{
+    type: String
+  },
+  telefono:{
+    type: Number
+  },
   finalPrice: {
     type: Number,
-    required: true,
   },
 });
+
+
 const Orders = new mongoose.model("orders", orderSchema);
 module.exports = Orders;

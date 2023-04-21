@@ -37,54 +37,94 @@ router.post("/user/order",isLoggedIn, (req, res) => {
     res.status(404).render('error/error',{"status":"404"})
   }
 });
-router.post("/user/order/verify", isLoggedIn,async (req, res) => {
-  console.log("Order Verify")
-  try{
+// router.post("/user/order/verify", isLoggedIn,async (req, res) => {
+//   console.log("Order Verify")
+//   try{
 
-    body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
+//     body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
 
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.RZP_key_secret)
-    .update(body.toString())
-    .digest("hex");
+//   const expectedSignature = crypto
+//     .createHmac("sha256", process.env.RZP_key_secret)
+//     .update(body.toString())
+//     .digest("hex");
 
-  var response = { status: "failure" };
-  if (expectedSignature === req.body.razorpay_signature) {
+//   var response = { status: "failure" };
+//   if (expectedSignature === req.body.razorpay_signature) {
+//     try {
+
+//       const code = Math.floor(100000 + Math.random() * 900000000).toString();
+
+//       const userObj = await Users.findById(req.user._id);
+//       const data = {
+//         user: req.user,
+//         orderid: code,
+//         orderList: userObj.cart,
+//         tarjeta: req.body.tarjeta,
+//         cve: req.body.cve,
+//         nombreFac: req.body.nombreFac,
+//         colonia: req.body.colonia,
+//         calle: req.body.calle,
+//         cp: req.body.cp,
+//         ciudad: req.body.ciudad,
+//         estado: req.body.estado,
+//         ref1: req.body.ref1,
+//         telefono: req.body.telefono,
+//         finalPrice: req.body.finalPrice,
+//       };
+      
+//       const orderObj = new Orders(data);
+//       userObj.orders.push(orderObj);
+//       await orderObj.save();
+//       userObj.cart.splice(0,userObj.orders.length)
+//       await userObj.save();
+//       req.flash("success","Su pedido se ha realizado correctamente");
+//     } catch (e) {
+//       console.log("There is a problem with orders");
+//       console.log(e);
+      
+//     }
+//   }
+//   res.send(response);
+//   }
+//   catch(e){
+//     console.log(e);
+//     res.status(404).render('error/error',{"status":"404"});
+//   }
+// });
+
+router.post('/user/orden', isLoggedIn, async (req, res) => {
     try {
+      const code = Math.floor(100000 + Math.random() * 900000000).toString();
       const userObj = await Users.findById(req.user._id);
-      let amount=req.body.order.amount/100;
       const data = {
         user: req.user,
-        orderid: req.body.razorpay_order_id,
-        paymentid: req.body.razorpay_payment_id,
+        orderid: code,
         orderList: userObj.cart,
-        purchaseDate: Date.now(),
-        finalPrice: amount,
+        tarjeta: req.body.tarjeta,
+        cve: req.body.cve,
+        nombreFac: req.body.nombreFac,
+        colonia: req.body.colonia,
+        calle: req.body.calle,
+        cp: req.body.cp,
+        ciudad: req.body.ciudad,
+        estado: req.body.estado,
+        ref1: req.body.ref1,
+        telefono: req.body.telefono,
+        finalPrice: req.body.finalPrice,
       };
-      
-      const orderObj = new Orders(data);
-      userObj.orders.push(orderObj);
+      const orderObj = new Orders(data); 
       await orderObj.save();
+      console.log(orderObj)
+      userObj.orders.push(orderObj);
       userObj.cart.splice(0,userObj.orders.length)
       await userObj.save();
       req.flash("success","Su pedido se ha realizado correctamente");
-      response = { status: "success", orderId: req.body.razorpay_order_id };
-    } catch (e) {
-      console.log("There is a problem with orders");
-      console.log(e);
-      
+      res.redirect("/user/cart")
+    } catch (err) {
+      console.log("Problema con las ordenes");
+      console.log(err)
+      res.status(404).render('error/error',{"status":"404"});
     }
-  }
-  res.send(response);
-  }
-  catch(e){
-    console.log(e);
-    res.status(404).render('error/error',{"status":"404"});
-  }
-});
-
-router.post('/user/orden', (req, res) => {
-    ty
 });
 
 router.get("/user/payment/:payment_id/:error_code",isLoggedIn,(req,res)=>{

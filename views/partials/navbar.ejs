@@ -33,30 +33,43 @@
            
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
-                </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
-                    </li>
-                
-                    <% if(loginUser != loginUser){ %>
-                        <% }else{ %>
-                            <% if(loginUser){ %>
-                                <% if(loginUser.role == "Admin") { %>
-                                <li class="nav-item">
-                                    <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield"></i></h5> </a>
-                                </li>
-                                <% } %>
-                            <% } %>
+                <% if(loginUser) {%>
+                    <% if(loginUser.role == "Admin") { %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield"></i></h5> </a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                        </li>
                         <% } %>
+                    <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                            </li>
+                        
+                    <% } %>   
+                    
 
             </ul>
 
@@ -84,14 +97,8 @@
                 
               </form>
 
-            <% if(loginUser != loginUser){ %>
-                <% if(loginUser.role == "Admin") { %>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield" style="color: aliceblue;"></i></h5> </a>
-                    </li>
-                    <% } %>
-                <% }else{ %>
-                    <a class="text-reset me-3" href="/user/cart/">
+                <% if(loginUser){ %>
+                    <a style="margin-left: 1rem;" class="text-reset me-3" href="/user/cart/">
                         <i class="fas fa-shopping-cart" style="font-size: 1.2rem; color: aliceblue;"></i>
                         <%let cartLength=0 ;if(loginUser){cartLength=loginUser.cart.length} %> 
                         <span class="badge rounded-pill badge-notification bg-success"><%=cartLength%></span>
@@ -112,7 +119,7 @@
                catch(e){
                    photourl=`https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png`}%>
             
-                <img src="<%= photourl%>" class="rounded-circle" height="35" alt="" width="35"
+                <img style="margin-left: 0.5rem;" src="<%= photourl%>" class="rounded-circle" height="35" alt="" width="35"
                     loading="lazy" alt="Not Found"/>
                 
                   
@@ -121,7 +128,10 @@
             <% if(loginUser){ %> 
                 <li>
                     
-                    <div class="dropdown-item"><%= loginUser.username%></div>
+                    <div class="dropdown-item"><strong>Usuario: </strong><%= loginUser.username%> <br>
+                        <% if( loginUser.role == "Customer") {%>
+                                               <strong>Correo: </strong><%= loginUser.email%></div>
+                        <% } %>
 
                 </li>
                 <% if( loginUser.role == "Admin") {%>
