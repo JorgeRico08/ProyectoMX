@@ -17,7 +17,7 @@
     <section class="order-list">
         <% for(let item of orders.reverse()){%>
             <div class="card  my-4">
-                <div class="card-header "> <h5>Fecha de compra : <%=String(item.purchaseDate).slice(0,16)%> Order Id : <%=item.orderid%></h5></div>
+                <div class="card-header "> <h5>Fecha de compra: <strong></strong> <%=String(item.fechaCompra).slice(0,16)%></strong> <br> Id de Compra: <strong><%=item.orderid%></strong></h5></div>
                 
                 <div class="card-body row">
                     <ul class="list-group">
@@ -44,7 +44,7 @@
                                         <h5><%=itemList.item.name%></h5>
                                     </div>
                                     <div class="itemList-price col d-flex align-items-center p-3">
-                                        <h5> Precio :  &#36; <%=itemList.item.price%></h5>
+                                        <h5> Precio por unidad:  &#36; <%=itemList.item.price%></h5>
                                     </div>
                                     <div class="itemList-quantity col d-flex align-items-center p-3">
                                         <h5> Cantidad : <%=itemList.quantity%></h5>
@@ -57,7 +57,7 @@
                 
                 </div>
                 <div class="card-footer text-end">
-                    <h5>Id del Pago : <%=item.paymentid%> &nbsp; Amount Paid :  &#36; <%=item.finalPrice%></h5>
+                    <h5>Numero de tarjeta : <%=item.tarjeta%> &nbsp; Pago final: &#36;<%=item.finalPrice%></h5>
                 </div>
             </div>
             <hr>

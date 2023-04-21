@@ -19,23 +19,23 @@
     }
 </style>
 
-<div class="container text-center" style="margin-top: 2rem;">
-<!-- Columns are always 50% wide, on mobile and desktop -->
-<div class="row">
-    <div class="col-6">
+
+  <div class="container text-center" style="margin-top: 2rem;">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col">
         <div id="mapa" style="height: 400px;"></div>
-    </div>
-    <div class="col-6">
-        <img class="imagenDat" src="/images/libro.png" alt="ImagenLMX" height="300px" width="600px">
+      </div>
+      <div class="col">
       </div>
     </div>
   </div>
 
-
   <script>
     function iniciarMapa() {
     var mapa = new google.maps.Map(document.getElementById('mapa'), {
-        center: {lat: 21.16424083675365 , lng: -100.92743154830339}, // Cambia las coordenadas del centro del mapa según tu ubicación deseada
+        center: {lat: 21.167249384863013 , lng: -100.93079802460589}, // Cambia las coordenadas del centro del mapa según tu ubicación deseada
         zoom: 8 // Ajusta el nivel de zoom del mapa según tus necesidades
       });
 

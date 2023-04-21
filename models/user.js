@@ -9,12 +9,9 @@ const userSchema =mongoose.Schema({
     googleid:{
         type:String
     },
-    nombreCompleto:{
-        type: String
-    },
-    email:{
-        type:String
-    },
+    // nombreCompleto:{
+    //     type: String
+    // },
     photo:{
         type:String
     },
@@ -26,6 +23,10 @@ const userSchema =mongoose.Schema({
         type:String,
         required:true,
         unique:true,
+    },
+    telefono: {
+        type: String,
+        require: true
     },
     cart:[
         {
@@ -54,8 +55,7 @@ const userSchema =mongoose.Schema({
         type: Number
     },
     codePass:{
-        type: Number,
-        default: 0
+        type: Number
     }
     // password:{
     //     type: String,

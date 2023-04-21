@@ -33,30 +33,43 @@
            
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
-                </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
-                    </li>
-                
-                    <% if(loginUser != loginUser){ %>
-                        <% }else{ %>
-                            <% if(loginUser){ %>
-                                <% if(loginUser.role == "Admin") { %>
-                                <li class="nav-item">
-                                    <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield"></i></h5> </a>
-                                </li>
-                                <% } %>
-                            <% } %>
+                <% if(loginUser) {%>
+                    <% if(loginUser.role == "Admin") { %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield"></i></h5> </a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                        </li>
                         <% } %>
+                    <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: aliceblue;" href="/">Inicio</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/bookAll"> Todos los libros</a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/novedades">Novedades</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: aliceblue;" href="/categorias">Categorias</a>
+                            </li>
+                        
+                    <% } %>   
+                    
 
             </ul>
 
@@ -71,16 +84,21 @@
                 <div class="userName me-3 d-none d-sm-block" style="color: white;"><h5 class="">Hello <%= loginUser.username%></h5></div>
             <%}%>  -->
 
-            
+            <form class="d-flex input-group w-auto"> 
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  id="ruta" 
+                  name="ruta"
+                />
+                
+              </form>
 
-            <% if(loginUser != loginUser){ %>
-                <% if(loginUser.role == "Admin") { %>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: aliceblue;" href="/admin/home"> <h5>Administrador <i class="fas fa-user-shield" style="color: aliceblue;"></i></h5> </a>
-                    </li>
-                    <% } %>
-                <% }else{ %>
-                    <a class="text-reset me-3" href="/user/cart/">
+                <% if(loginUser){ %>
+                    <a style="margin-left: 1rem;" class="text-reset me-3" href="/user/cart/">
                         <i class="fas fa-shopping-cart" style="font-size: 1.2rem; color: aliceblue;"></i>
                         <%let cartLength=0 ;if(loginUser){cartLength=loginUser.cart.length} %> 
                         <span class="badge rounded-pill badge-notification bg-success"><%=cartLength%></span>
@@ -101,7 +119,7 @@
                catch(e){
                    photourl=`https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png`}%>
             
-                <img src="<%= photourl%>" class="rounded-circle" height="35" alt="" width="35"
+                <img style="margin-left: 0.5rem;" src="<%= photourl%>" class="rounded-circle" height="35" alt="" width="35"
                     loading="lazy" alt="Not Found"/>
                 
                   
@@ -110,7 +128,10 @@
             <% if(loginUser){ %> 
                 <li>
                     
-                    <div class="dropdown-item"><%= loginUser.username%></div>
+                    <div class="dropdown-item"><strong>Usuario: </strong><%= loginUser.username%> <br>
+                        <% if( loginUser.role == "Customer") {%>
+                                               <strong>Correo: </strong><%= loginUser.email%></div>
+                        <% } %>
 
                 </li>
                 <% if( loginUser.role == "Admin") {%>
@@ -138,3 +159,32 @@
     <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
+
+<!-- Utilizando un CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+$(function() {
+  $('#ruta').autocomplete({
+    source: function(request, response) {
+      $.ajax({
+        url: '/autocomplete',
+        dataType: 'json',
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    minLength: 1, // Se especifica que se muestren las sugerencias a partir del primer carácter ingresado
+    select: function(event, ui) {
+      window.location.href = ui.item.value; // Se redirige al usuario a la ruta seleccionada
+      return false; // Se previene el comportamiento predeterminado del evento 'select'
+    }
+  });
+});
+
+
+</script>
+

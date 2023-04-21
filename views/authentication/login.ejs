@@ -11,15 +11,7 @@
   </div>  
 
   <div class="container-fluid my-2">
-    
-    
-     <% if(error!=""){%>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <%= error %> 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          <%}
-         if(register!=""){%>
+      <%if(register!=""){%>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <%= register %> 
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -53,6 +45,7 @@
                 <!-- Register buttons -->
                 <div class="text-center">
                   <p>Nuevo usuario? <a href="/register">Pulse aquí para registrarse</a></p>
+                  <p>Olvidaste la contraceña? <a href="/rPass">Pulse aquí..</a></p>
                   <!--
                     <a href="/auth/google" class="btn btn-primary btn-floating mx-1 mb-2" style="transform:scale(1.2)">
                     <i class="fab fa-google"></i>
