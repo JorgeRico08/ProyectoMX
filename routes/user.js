@@ -118,4 +118,14 @@ router.get("/user/orders",currentUrl,isLoggedIn, async (req, res) => {
     }
     
   });
+
+  router.get("/mapaSitio", async (req, res) => {
+    try {
+      res.render("utils/mapaSitio");
+    } catch (e) {
+      console.log(e);
+      res.status(404).render("error/error", { status: "404" });
+    }
+  });
+
 module.exports=router;
