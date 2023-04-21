@@ -73,14 +73,14 @@ router.post("/register", upload.single("image"), async (req, res) => {
     }
 
             // ********   VALIDACION reCAPCHA
-            const recaptchaToken = oData['g-recaptcha-response'];
-            let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
+            // const recaptchaToken = oData['g-recaptcha-response'];
+            // let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
     
-            const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
-            const response = await fetch(url, {
-              method: 'POST'
-            });
-            const data = await response.json();
+            // const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+            // const response = await fetch(url, {
+            //   method: 'POST'
+            // });
+            // const data = await response.json();
     
             // ************
     
@@ -98,10 +98,10 @@ router.post("/register", upload.single("image"), async (req, res) => {
       <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
     };
         if (req.body.password == req.body.pwd2) {
-            if (!data.success) {
-              req.flash("register", "reCAPTCHA invalido, Acaso no eres un humano!");
-              res.redirect("/register");
-            }else{
+            //  if (!data.success) {
+            //   req.flash("register", "reCAPTCHA invalido, Acaso no eres un humano!");
+            //   res.redirect("/register");
+            // }else{
               const enviarEmail = transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
@@ -115,7 +115,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
               req.flash("login", "Usuario registrado correctamente, inicie sesión para continuar");
               req.flash("login", "Se enviado un email con su codigo de acceso para acceder!");
               res.redirect("/login");
-            }
+            // }
         } else {
           req.flash("register", "La contraceña no coinciden");
           res.redirect("/register");
@@ -315,22 +315,22 @@ router.post("/rPass", async (req, res) => {
   try {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 // ********   VALIDACION reCAPCHA
-let oData = req.body
-const recaptchaToken = oData['g-recaptcha-response'];
-let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
+// let oData = req.body
+// const recaptchaToken = oData['g-recaptcha-response'];
+// let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
 
-const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
-const response = await fetch(url, {
-  method: 'POST'
-});
-const data = await response.json();
+// const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+// const response = await fetch(url, {
+//   method: 'POST'
+// });
+// const data = await response.json();
 
 // ************
     const correo  = req.body.email;
-    if (!data.success) {
-      req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
-      res.redirect("/rPass");
-    }else{
+    // if (!data.success) {
+    //   req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
+    //   res.redirect("/rPass");
+    // }else{
     await User.find({email: correo}, async function (error, result) {
       if (result == undefined || result == null || result[0] == null) {
         req.flash("error", "El correo no esta registrado a LibritoMX")
@@ -372,7 +372,7 @@ const data = await response.json();
       }
     }
     })
-  }
+  // }
   } catch (err) { 
     console.log(err);
     res.flash("error", "Correo invalido");
@@ -384,25 +384,25 @@ router.post("/rPassUpdate", async (req, res)=>{
   try {
 
 // ********   VALIDACION reCAPCHA
-let oData = req.body
-const recaptchaToken = oData['g-recaptcha-response'];
-let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
+// let oData = req.body
+// const recaptchaToken = oData['g-recaptcha-response'];
+// let secret = "6LefrZwlAAAAAHcdRiK3lzMKfNBcD5l5Vckulx_i ";
 
-const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
-const response = await fetch(url, {
-  method: 'POST'
-});
-const data = await response.json();
+// const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+// const response = await fetch(url, {
+//   method: 'POST'
+// });
+// const data = await response.json();
 
 // ************
 
     const codigo = req.body.codePass;
     const correo = req.body.email;
     const pass = req.body.password;
-    if (!data.success) {
-      req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
-      res.redirect("/rPass");
-    }else{
+    // if (!data.success) {
+    //   req.flash("error", "reCAPTCHA invalido, Acaso no eres un humano!");
+    //   res.redirect("/rPass");
+    // }else{
     await User.find({email: correo}, async function (error, result) {
       if (result == undefined || result == null || result[0] == null) {
         req.flash("error","El correo no esta registrado a LibritoMX");
@@ -454,7 +454,7 @@ const data = await response.json();
       };
     });
   
-  }
+  // }
   } catch (error) {
       res.flash("error", "Error de sistema");
       res.redirect("/rPass")
