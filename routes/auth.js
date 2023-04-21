@@ -57,7 +57,8 @@ router.post("/register", upload.single("image"), async (req, res) => {
       email: req.body.email,
       telefono: req.body.telefono,
       codePass: 0,
-      codeNuevo: code
+      codeNuevo: code,
+      nombreCompleto: req.body.nombreCompleto
     });
 
     let file;
@@ -88,11 +89,11 @@ router.post("/register", upload.single("image"), async (req, res) => {
     const mailOptions = {
       from: 'libritomxdev@gmail.com',
       to: userObj.email,
-      subject: `Welcome LibritoMX`,
+      subject: `Welcome LibritoMX - @${userObj.username}`,
       text: "Tienda numero 1 en venta de libros",
       html: `
       <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
-      <h2>Te damos la bienvenida: ${userObj.username}</h2>
+      <h2>Te damos la bienvenida: ${userObj.nombreCompleto}</h2>
       <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
       <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
       <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`

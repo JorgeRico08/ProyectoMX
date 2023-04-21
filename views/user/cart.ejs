@@ -104,13 +104,13 @@
                                         
                                         <form action="/pedido" method="post" class="needs-validation" novalidate>
                                             <div class="form-outline mb-4">
-                                              <input type="number" id="tarjeta" class="form-control" name="tarjeta" required/>
+                                              <input type="number" id="tarjeta" class="form-control" name="tarjeta" min="15" max="16" required/>
                                               <label class="form-label" for="tarjeta">Num. Tarjeta</label>
                                               <div class="valid-feedback">¡Los datos son correctos!</div>
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
                                             </div> 
                                             <div class="form-outline mb-4">
-                                              <input type="number" id="cve" class="form-control" name="cve" minlength="2" maxlength="3" required/>
+                                              <input type="number" id="cve" class="form-control" name="cve" min="2" max="3" required/>
                                               <label class="form-label" for="cve">CVE</label>
                                               <div class="valid-feedback">¡Los datos son correctos!</div>
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
@@ -153,7 +153,7 @@
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
                                             </div>
                                             <div class="form-outline mb-4">
-                                              <input type="number" id="cp" class="form-control" name="cp" required/>
+                                              <input type="number" id="cp" class="form-control" name="cp" min="4" max="5" required/>
                                               <label class="form-label" for="cp">Codigo Postal</label>
                                               <div class="valid-feedback">¡Los datos son correctos!</div>
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
@@ -178,7 +178,7 @@
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
                                             </div>
                                             <div class="form-outline mb-4">
-                                              <input type="tel" id="telefono" value="+52" class="form-control" name="telefono" minlength="9" maxlength="13" required/>
+                                              <input type="tel" id="telefono" value="+52" class="form-control" name="telefono" min="9" max="13" required/>
                                               <label class="form-label" for="telefono">Telefono</label>
                                               <div class="valid-feedback">¡Los datos son correctos!</div>
                                               <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>

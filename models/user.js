@@ -9,9 +9,9 @@ const userSchema =mongoose.Schema({
     googleid:{
         type:String
     },
-    // nombreCompleto:{
-    //     type: String
-    // },
+    nombreCompleto:{
+        type: String
+    },
     photo:{
         type:String
     },
