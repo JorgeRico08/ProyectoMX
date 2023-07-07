@@ -4,18 +4,22 @@ const productSchema=new mongoose.Schema({
     name:{
         type:String
     },
+    //Este apartado es para colocar el enlace de una imagen 
     img:{
         type:String
     },
+    //Este apartado es para agregar una imagen desde tu equipo
     image:{
         data :Buffer,
         contentType:String
     },
+    //Este apartado es para colocar el precio del producto 
     price:{
         type:Number,
         min:0,
         required:true
     },
+    // Este apartado es para la descripcion 
     desc:{
         type:String
     },
@@ -25,34 +29,35 @@ const productSchema=new mongoose.Schema({
             ref:"reviews"
         },
     ],
-    autor: {
+    color: {
         type: String,
         require: true
     },
-    editorial: {
-        type: String,
-        require: true
-    },
-    edicion: {
-        type: String,
-        require: true
-    },
-    publicacion: {
-        type: String, 
-        require: true
-    },
-    paginas: {
-        type: String,
-        require: true
-    },
-    isbn: {
-        type: Number,
-        require: true
-    },
-    idioma:{
-        type: String,
-        require: true
-    },
+     Talla: {
+         type: String,
+         require: true
+     },
+    // edicion: {
+    //     type: String,
+    //     require: true
+    // },
+    // publicacion: {
+    //     type: String, 
+    //     require: true
+    // },
+    // paginas: {
+    //     type: String,
+    //     require: true
+    // },
+    // isbn: {
+    //     type: Number,
+    //     require: true
+    // },
+    // idioma:{
+    //     type: String,
+    //     require: true
+    // },
+    //Este apartado es para seleccionar una categoria
     categoria:{
         type: String,
         require: true

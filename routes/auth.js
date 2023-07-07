@@ -39,8 +39,8 @@ var transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-  user: 'libromx.gestiondev@gmail.com',
-  pass: 'jjdf mqnw mjpy ukdh'
+  user: 'ventamodamx@gmail.com',
+  pass: 'pwhiawqqtbiyfjrb'
   }
 });
 
@@ -87,16 +87,16 @@ router.post("/register", upload.single("image"), async (req, res) => {
     
 
     const mailOptions = {
-      from: 'libritomxdev@gmail.com',
+      from: 'ventamodamx@gmail.com',
       to: userObj.email,
-      subject: `Welcome LibritoMX - @${userObj.username}`,
-      text: "Tienda numero 1 en venta de libros",
+      subject: `Bienvenido a VentaModaMX - @${userObj.username}`,
+      text: "Tienda numero 1 tenerte a la moda",
       html: `
-      <h1>Bienvenido a librito MX - Tu libreria de preferencia</h1>
+      <h1>Bienvenido a Venta Moda MX - Tu tinda de ropa favorita</h1>
       <h2>Te damos la bienvenida: ${userObj.nombreCompleto}</h2>
       <p>Tu codigo de inicio de sesion es: ${userObj.codeNuevo}</p>
       <p>Este codigo es importante para poder iniciar sesion por primera vez en la aplicacion</p>
-      <img src="https://familiasactivas.com/wp-content/uploads/2018/04/rafaelalberti.jpg" alt="Imagen de librito mx">`
+      <img src="https://media.istockphoto.com/id/1210584470/es/foto/tienda-de-ropa-para-hombre.jpg?s=612x612&w=0&k=20&c=Zyl9IGQGqUesoI-DzJorl2iiwrP-eKLqOsM6bXoAeG4=" alt="Imagen de Venta Moda MX">`
     };
 
     await User.find({email: userObj.email}, async function (error, result) {

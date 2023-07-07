@@ -13,103 +13,83 @@
         <hr>
         <div class="forms m-auto res-width">
             <form action="/products/new" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-                <div class="form-outline mb-5">
+              <label class="form-label" for="price">Nombre</label>  
+              <div class="form-outline mb-5">
                     <input type="text" id="name" class="form-control" name="name" required/>
-                    <label class="form-label" for="name">Nombre del Libro</label>
+                    <label class="form-label" for="name">Nombre del Producto</label>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
                     <div class="invalid-feedback">Tienes que escribir el nombre correcto</div>
                   </div>
-
-                  <div class="form-outline mb-3">
-                    <input type="text" id="autor" class="form-control" name="autor" required/>
-                    <label class="form-label" for="autor">Autor</label>
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir el precio correcto</div>
-                  </div>
-<br>
-                  <div class="form-outline mb-3">
-                    <input type="text" id="editorial" class="form-control" name="editorial" required/>
-                    <label class="form-label" for="editorial">Editorial</label>
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir la editorial correcto</div>
-                  </div>
-                  <br>
-                  <div class="form-outline mb-3">
-                    <input type="text" id="edicion" class="form-control" name="edicion" required/>
-                    <label class="form-label" for="edicion">Edicion</label>
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir la edicion correcto</div>
-                  </div>
-                  <br>
-                  <div class="form-outline mb-3">
-                    <label class="form-label" for="publicacion">Año de publicacion</label>
-                    <input type="date" id="publicacion" class="form-control" name="publicacion" required/>
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir la fecha correcto</div>
-                  </div>
-                  <br>
-                  <div class="form-outline mb-3">
-                    <input type="number" id="paginas" class="form-control" name="paginas" required/>
-                    <label class="form-label" for="paginas">Numero de paginas</label>
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir las paginas correcto</div>
-                  </div>
-                  <br>
+                  <!-- Este apartado es para colocar el precio del producto -->
+                  <label class="form-label" for="price">Precio en moneda Mexicana</label> 
                   <div class="form-outline mb-3">
                     <input type="number" id="price" class="form-control" min="0" name="price" required/>
                     <label class="form-label" for="price">Precio</label>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
                     <div class="invalid-feedback">Tienes que escribir el precio correcto</div>
                   </div>
-                  <br>
+                  <!-- Este apartado es para colocar el Color del producto -->
                   <div class="form-outline mb-3">
-                    <input type="number" id="isbn" class="form-control" min="0" name="isbn" required/>
-                    <label class="form-label" for="isbn">ISBN</label>
+                    <label class="form-label" for="price">Color</label>
+                    <select class="form-select" aria-label="Default select example" name="Color" required id="color">
+                      <option selected disabled value="">Selecciona una Color...</option>
+                    <% color.forEach((item)=>{ %> 
+                      <option value="<%=item.colores%>"><%=item.colores%></option>
+                    <% }) %>
+                  </select>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir el ISBN correcto</div>
-                  </div>
-                  <br>
+                    <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
+                  </div> 
+                  <!-- Este apartado es para colocar la Talla del producto -->
                   <div class="form-outline mb-3">
-                    <input type="text" id="idioma" class="form-control" min="0" name="idioma" required/>
-                    <label class="form-label" for="price">Idioma</label>
+                    <label class="form-label" for="price">Tallas</label>
+                    <select class="form-select" aria-label="Default select example" name="Talla" required id=" editorial">
+                      <option selected disabled value="">Selecciona una Talla...</option>
+                    <% talla.forEach((item)=>{ %> 
+                      <option value="<%=item.tallas%>"><%=item.tallas%></option>
+                    <% }) %>
+                  </select>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">Tienes que escribir el idioma correcto</div>
+                    <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
                   </div>
-                  <br>
+                  <!-- Este apartado es para seleccionar una categoria -->
                   <div class="form-outline mb-3">
+                    <label class="form-label" for="price">Categorias</label>
                     <select class="form-select" aria-label="Default select example" name="categoria" required id=" validationCustom04 categoria">
                       <option selected disabled value="">Selecciona una categoria...</option>
                       <% for(item of cat.reverse()){ %> 
                         <option value="<%=item.categorias%>"><%=item.categorias%></option>
                       <% } %>
                     </select>
-                    <label class="form-label" for="price">Categorias</label>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
                     <div class="invalid-feedback">Tienes que seleccionar la categoria correcto</div>
                   </div>
-
-                  <h6 class="my-3 text-center">Puede proporcionar un archivo de imagen o un enlace de imagen</h6>
-                  <div class="form-outline mb-4">
-                    <input type="file" class="form-control" name="image" id="customFile" />
-                    <div class="valid-feedback">¡Los datos son correctos!</div>
-                    <div class="invalid-feedback">¡No es un archivo de imagen válido!</div>
-                  </div>
+                  <!-- Este apartado es para agregar una imagen desde tu equipo -->
+                  <h6 class="my-3 text-center"></h6>
                   
+                  <label class="form-label" for="image">Selecciona una imagen de tu equipo local </label>
                   <div class="form-outline mb-4">
-                    <input type="text" id="img" class="form-control" name="img"/>
-                    <label class="form-label" for="img">Enlace de la imagen</label>
+                    <input type="file" class="" name="image" id="customFile" />
                     <div class="valid-feedback">¡Los datos son correctos!</div>
                     <div class="invalid-feedback">¡No es un archivo de imagen válido!</div>
                   </div>
+                  <!-- Esto es para Colocar el enlace de una imagen  -->
+                  <label class="form-label" for="img">Selecciona un enlace de la imagen</label>
+                  <div class="form-outline mb-4">
+                    <input type="text" id="img" class="" name="img"/>
+                    <div class="valid-feedback">¡Los datos son correctos!</div>
+                    <div class="invalid-feedback">¡No es un archivo de imagen válido!</div>
+                  </div>
+                  <!-- Este apartado es para la descripcion del libro -->
+                  <label class="form-label" for="desc">Descripcion </label>
                   <div class="form-outline mb-5">
-                    <textarea class="form-control" id="desc" rows="4" name="desc" required></textarea>
-                    <label class="form-label" for="desc">Sinopsis</label>
+                    <textarea class="" id="desc" rows="8" cols="80"name="desc" required></textarea>
                     <div class="valid-feedback">¡Los datos son correctos!</div>
                     <div class="invalid-feedback">Tienes que escribir la sipnosis</div>
                   </div>
                 
                   <div class="btn-container d-flex flex-column w-50 justify-center m-auto">
-                    <button type="submit" class="btn btn-primary mb-4">Agregar libro</button>
+                    <button type="submit" class="btn btn-primary mb-4">Agregar Producto</button>
                     <button type="reset" class="btn btn-primary mb-4">Limpiar datos</button>
                   </div>
             </form>

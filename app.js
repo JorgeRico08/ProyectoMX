@@ -20,7 +20,7 @@ const User = require("./models/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 mongoose
-  .connect('mongodb+srv://Jorge:Jorge01@cluster0.tbdkk.mongodb.net/ProyectoLibro', {
+  .connect('mongodb+srv://administrador:administrador070602@cluster0.pwwc58x.mongodb.net/VentaModa_MX', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -51,27 +51,6 @@ app.use(passport.session());
 // passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new LocalStrategy(User.authenticate())); // for login logout session
 
-//Configuring Google Strategy
-// passport.use(
-//   new GoogleStrategy(
-//     {
-//       clientID: process.env.GA_clientID,
-//       clientSecret: process.env.GA_clientSecret,
-//       callbackURL: process.env.GA_callbackURL,
-//     },
-//     async function (accessToken, refreshToken, profile, done) {
-//       const profileDetails = {
-//         username: profile.displayName,
-//         googleid: profile.id,
-//         email: profile.emails[0].value,
-//         photo: profile.photos[0].value,
-//       };
-//       await User.findOrCreate(profileDetails, function (err, user) {
-//         return done(err, user);
-//       });
-//     }
-//   )
-// );
 
 //SERIALIZE AND DESERIALIZING
 passport.serializeUser(User.serializeUser());
@@ -110,6 +89,6 @@ app.use('*',(req,res)=>{
   res.render('error/error')
 })
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor iniciado en el puerto ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || 4200, () => {
+  console.log(`Servidor iniciado en el puerto ${process.env.PORT || 4200}`);
 });

@@ -13,6 +13,8 @@ const path = require("path");
 const fs = require("fs");
 const currentUrl = require("../middlewares/currentUrl");
 const { v4: uuid } = require("uuid");
+const Tallas = require("../models/tallas");
+const Colores = require("../models/colores")
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname,"/uploads/product"));
@@ -85,6 +87,7 @@ router.get("/categorias", currentUrl, async (req, res)=>{
   try {
     const cat = await Categorias.find({});
     const data = await Product.find({});
+   
     res.render('products/navegacion/Categorias', {data , cat } );
   } catch (err) {
     console.log(err);
@@ -92,10 +95,13 @@ router.get("/categorias", currentUrl, async (req, res)=>{
   }
 });
 
+
 router.get("/products/new", isLoggedIn, isAdmin, async (req, res) => {
   try {
     const cat = await Categorias.find({});
-    res.render("products/new", {cat});
+    const talla = await Tallas.find({});
+    const color = await Colores.find({});
+    res.render("products/new", {cat, talla,color});
   } catch (e) {
     console.log(e);
     res.status(404).render("error/error", { status: "404" });

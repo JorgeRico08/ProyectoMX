@@ -34,7 +34,7 @@ const products=[
     {
         name:"External Harddisk",
         img:"https://cdn.mos.cms.futurecdn.net/yVHoQpeAfJVwzmMtPE4s5A.jpg",
-        price:3000,
+        price:4200,
         desc:"Get this HP 1 TB wired external hard drive and store all your important documents, favourite movies, songs and pictures. This hard drive can handle small and large files and has a capacity of 1 TB. This slim, portable and stylish device is easy to carry around and also offers fast data transfer."
     },
     {
